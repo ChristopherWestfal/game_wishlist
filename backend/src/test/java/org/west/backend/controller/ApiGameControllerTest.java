@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class GameControllerTest {
+class ApiGameControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

@@ -4,28 +4,44 @@ import HomePage from "./pages/HomePage.tsx";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {Game} from "./types/GameTypes.ts";
+import WishlistPage from "./pages/WishlistPage.tsx";
 
 function App() {
 
-    const [games, setGames] = useState<Game[]>([]);
+    const [apiGames, setApiGames] = useState<Game[]>([]);
+    const [wishedGames, setWishedGames] = useState<Game[]>([]);
 
-    function getAllGames() {
+    function getAllApiGames() {
         axios.get("/api")
             .then(response => {
-                setGames(response.data);
+                setApiGames(response.data);
             })
         .catch(error => console.error("Something went wrong", error))
     }
 
+    function getAllWishedGames() {
+        axios.get("/api/wishlist")
+            .then(response => {
+                setWishedGames(response.data);
+            })
+            .catch(error => console.error("Something went wrong", error))
+    }
+
+
     useEffect(() => {
-        getAllGames();
+        getAllApiGames();
+        getAllWishedGames()
     }, []);
 
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <HomePage games={games}/>
-        }
+            element: <HomePage games={apiGames}/>
+        },
+        {
+            path: "/wishlist",
+            element: <WishlistPage games={wishedGames}/>
+        },
 
     ])
 

@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 
-public class GameService {
+public class ApiGameService {
     private final GameRepository gameRepository;
 
     public List<Game> getAllGames() {
