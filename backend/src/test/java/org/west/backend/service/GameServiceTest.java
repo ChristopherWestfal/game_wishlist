@@ -14,7 +14,6 @@ import static org.mockito.Mockito.*;
 class GameServiceTest {
 
     private final GameRepository mockGameRepository = mock(GameRepository.class);
-    private final GameService gameService = new GameService(mockGameRepository);
     private List<Game> testData;
 
 
