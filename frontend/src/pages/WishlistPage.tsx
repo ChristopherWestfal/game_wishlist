@@ -2,11 +2,11 @@ import {Game} from "../types/GameTypes.ts";
 import GameCard from "../components/GameCard.tsx";
 import "../styles/ShowGameCardPages.css"
 
-type HomePageProps = {
-    games:Game[],
+type WishlistPageProps = {
+    games:Game[]
 }
 
-export default function HomePage(props: Readonly<HomePageProps>) {
+export default function WishlistPage(props: Readonly<WishlistPageProps>) {
 
     return (
         <>
