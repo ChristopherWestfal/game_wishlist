@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class GameServiceTest {
+class ApiGameServiceTest {
 
     private final GameRepository mockGameRepository = mock(GameRepository.class);
     private List<Game> testData;
