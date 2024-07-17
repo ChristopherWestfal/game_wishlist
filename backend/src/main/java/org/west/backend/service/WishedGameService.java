@@ -14,6 +14,6 @@ public class WishedGameService {
     private final WishlistRepository wishlistRepository;
 
     public List<WishedGame> getAllGames() {
-        return WishlistRepository.findAll();
+        return wishlistRepository.findAll();
     }
 }
