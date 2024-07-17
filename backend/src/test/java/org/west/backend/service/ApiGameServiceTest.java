@@ -14,6 +14,7 @@ import static org.mockito.Mockito.*;
 class ApiGameServiceTest {
 
     private final GameRepository mockGameRepository = mock(GameRepository.class);
+    private final ApiGameService apiGameService = new ApiGameService(mockGameRepository);
     private List<Game> testData;
 
 
@@ -33,7 +34,7 @@ class ApiGameServiceTest {
         when(mockGameRepository.findAll()).thenReturn(expected);
 
         // WHEN
-        List<Game> actual = mockGameRepository.findAll();
+        List<Game> actual = apiGameService.getAllGames();
 
         // THEN
         assertEquals(expected,actual);
@@ -47,7 +48,7 @@ class ApiGameServiceTest {
         when(mockGameRepository.findAll()).thenReturn(expected);
 
         // WHEN
-        List<Game> actual = mockGameRepository.findAll();
+        List<Game> actual = apiGameService.getAllGames();
 
         // THEN
         assertEquals(expected,actual);

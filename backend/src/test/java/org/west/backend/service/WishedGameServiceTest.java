@@ -14,6 +14,7 @@ import static org.mockito.Mockito.*;
 class WishedGameServiceTest {
 
     private final WishlistRepository mockWishlistRepository = mock(WishlistRepository.class);
+    private final WishedGameService wishedGameService = new WishedGameService(mockWishlistRepository);
     private List<WishedGame> testData;
 
 
@@ -33,7 +34,7 @@ class WishedGameServiceTest {
         when(mockWishlistRepository.findAll()).thenReturn(expected);
 
         // WHEN
-        List<WishedGame> actual = mockWishlistRepository.findAll();
+        List<WishedGame> actual = wishedGameService.getAllGames();
 
         // THEN
         assertEquals(expected,actual);
@@ -47,7 +48,7 @@ class WishedGameServiceTest {
         when(mockWishlistRepository.findAll()).thenReturn(expected);
 
         // WHEN
-        List<WishedGame> actual = mockWishlistRepository.findAll();
+        List<WishedGame> actual = wishedGameService.getAllGames();
 
         // THEN
         assertEquals(expected,actual);
