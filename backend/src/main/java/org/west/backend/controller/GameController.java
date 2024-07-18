@@ -3,27 +3,33 @@ package org.west.backend.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.west.backend.model.WishedGame;
-import org.west.backend.service.WishedGameService;
+import org.west.backend.model.Game;
+import org.west.backend.service.GameService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class WishedGameController {
+public class GameController {
 
-    private final WishedGameService wishedGameService;
+    private final GameService gameService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/wishlist")
-    public List<WishedGame> getAllGames(){
-        return wishedGameService.getAllGames();
+    public List<Game> getAllGames(){
+        return gameService.getAllGames();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/wishlist/{id}")
     public void deleteGameById(@PathVariable String id){
-        wishedGameService.deleteGameById(id);
+        gameService.deleteGameById(id);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/wishlist")
+    public void addGame(){
+
     }
 }

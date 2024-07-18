@@ -10,10 +10,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 
-public class ApiGameService {
+public class GameService {
     private final GameRepository gameRepository;
 
     public List<Game> getAllGames() {
         return gameRepository.findAll();
+    }
+
+    public void deleteGameById(String id) {
+        gameRepository.deleteById(id);
     }
 }
