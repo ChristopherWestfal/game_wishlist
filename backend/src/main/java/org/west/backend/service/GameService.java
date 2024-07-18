@@ -20,4 +20,6 @@ public class GameService {
     public void deleteGameById(String id) {
         gameRepository.deleteById(id);
     }
+
+    public Game postGame(Game newGame) { return gameRepository.save(newGame); }
 }

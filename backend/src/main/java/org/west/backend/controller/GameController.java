@@ -29,7 +29,7 @@ public class GameController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/wishlist")
-    public void addGame(){
-
+    public Game postGame(@RequestBody Game newGame){
+        return gameService.postGame(newGame);
     }
 }

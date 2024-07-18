@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -58,5 +59,30 @@ class GameControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         verify(mockGameRepository).deleteById("1");
+    }
+
+    @Test
+    void addGame() throws Exception {
+        when(mockGameRepository.save(gameTestData.getFirst())).thenReturn(gameTestData.getFirst());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/wishlist")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                            {
+                               "id": "1",
+                               "name": "The Legend of Zelda: Breath of the Wild",
+                               "releaseDate": "2017-03-03",
+                               "fav": true
+                            }
+                        """))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                            {
+                               "id": "1",
+                               "name": "The Legend of Zelda: Breath of the Wild",
+                               "releaseDate": "2017-03-03",
+                               "fav": true
+                            }
+                        """));
     }
 }

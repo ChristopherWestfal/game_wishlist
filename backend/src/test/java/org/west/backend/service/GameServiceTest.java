@@ -63,4 +63,18 @@ class GameServiceTest {
         verify(mockGameRepository).deleteById("1");
 
     }
+
+    @Test
+    void postGame_shouldReturnGame_whenCalledWithGame(){
+        // GIVEN
+        Game expected = testData.getFirst();
+        Game newItem = new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", true);
+
+        // WHEN & THEN
+        when(mockGameRepository.save(any(Game.class))).thenReturn(expected);
+        Game actual = gameService.postGame(newItem);
+
+        assertEquals(expected, actual);
+        verify(mockGameRepository).save(expected);
+    }
 }
