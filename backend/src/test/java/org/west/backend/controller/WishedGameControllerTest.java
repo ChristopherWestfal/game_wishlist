@@ -14,7 +14,7 @@ import org.west.backend.repository.WishlistRepository;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -48,5 +48,15 @@ class WishedGameControllerTest {
                                                                     fav: true
                                                                 }]
                                                                 """));
+    }
+
+    @Test
+    void deleteGameById() throws Exception {
+        doNothing().when(mockWishlistRepository).deleteById("1");
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/wishlist/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        verify(mockWishlistRepository).deleteById("1");
     }
 }

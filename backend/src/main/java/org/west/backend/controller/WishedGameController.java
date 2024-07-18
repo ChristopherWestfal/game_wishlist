@@ -2,10 +2,7 @@ package org.west.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.west.backend.model.WishedGame;
 import org.west.backend.service.WishedGameService;
 
@@ -22,5 +19,11 @@ public class WishedGameController {
     @GetMapping("/wishlist")
     public List<WishedGame> getAllGames(){
         return wishedGameService.getAllGames();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/wishlist/{id}")
+    public void deleteGameById(@PathVariable String id){
+        wishedGameService.deleteGameById(id);
     }
 }

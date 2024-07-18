@@ -16,4 +16,8 @@ public class WishedGameService {
     public List<WishedGame> getAllGames() {
         return wishlistRepository.findAll();
     }
+
+    public void deleteGameById(String id) {
+        wishlistRepository.deleteById(id);
+    }
 }
