@@ -11,19 +11,19 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class ApiGameServiceTest {
+class GameServiceTest {
 
     private final GameRepository mockGameRepository = mock(GameRepository.class);
-    private final ApiGameService apiGameService = new ApiGameService(mockGameRepository);
+    private final GameService gameService = new GameService(mockGameRepository);
     private List<Game> testData;
 
 
     @BeforeEach
     void setUp(){
         testData = List.of(
-                new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", false),
-                new Game("2", "God of War", "2018-04-20", false),
-                new Game("3", "Red Dead Redemption 2", "2018-10-26", false)
+                new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", true),
+                new Game("2", "God of War", "2018-04-20", true),
+                new Game("3", "Red Dead Redemption 2", "2018-10-26", true)
         );
     }
 
@@ -34,7 +34,7 @@ class ApiGameServiceTest {
         when(mockGameRepository.findAll()).thenReturn(expected);
 
         // WHEN
-        List<Game> actual = apiGameService.getAllGames();
+        List<Game> actual = gameService.getAllGames();
 
         // THEN
         assertEquals(expected,actual);
@@ -48,10 +48,19 @@ class ApiGameServiceTest {
         when(mockGameRepository.findAll()).thenReturn(expected);
 
         // WHEN
-        List<Game> actual = apiGameService.getAllGames();
+        List<Game> actual = gameService.getAllGames();
 
         // THEN
         assertEquals(expected,actual);
         verify(mockGameRepository).findAll();
+    }
+
+    @Test
+    void getAllGames_shouldDeleteById_whenCalledWithId1() {
+        // When
+        gameService.deleteGameById("1");
+        // THEN
+        verify(mockGameRepository).deleteById("1");
+
     }
 }

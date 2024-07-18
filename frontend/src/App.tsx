@@ -12,9 +12,9 @@ function App() {
     const [wishedGames, setWishedGames] = useState<Game[]>([]);
 
     function getAllApiGames() {
-        axios.get("/api")
+        axios.get("http://localhost:3000/info")
             .then(response => {
-                setApiGames(response.data);
+                setApiGames(response.data.games);
             })
         .catch(error => console.error("Something went wrong", error))
     }

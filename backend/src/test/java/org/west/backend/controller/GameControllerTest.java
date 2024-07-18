@@ -9,8 +9,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.west.backend.model.WishedGame;
-import org.west.backend.repository.WishlistRepository;
+import org.west.backend.model.Game;
+import org.west.backend.repository.GameRepository;
 
 import java.util.List;
 
@@ -18,26 +18,26 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class WishedGameControllerTest {
+class GameControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private WishlistRepository mockWishlistRepository;
+    private GameRepository mockGameRepository;
 
-    private List<WishedGame> gameTestData;
+    private List<Game> gameTestData;
 
     @BeforeEach
     void setUp(){
         gameTestData = List.of(
-                new WishedGame("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", true)
+                new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", true)
         );
     }
 
     @Test
     void getAllGames() throws Exception {
-        when(mockWishlistRepository.findAll()).thenReturn(gameTestData);
+        when(mockGameRepository.findAll()).thenReturn(gameTestData);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/wishlist"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -52,11 +52,11 @@ class WishedGameControllerTest {
 
     @Test
     void deleteGameById() throws Exception {
-        doNothing().when(mockWishlistRepository).deleteById("1");
+        doNothing().when(mockGameRepository).deleteById("1");
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/wishlist/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        verify(mockWishlistRepository).deleteById("1");
+        verify(mockGameRepository).deleteById("1");
     }
 }
