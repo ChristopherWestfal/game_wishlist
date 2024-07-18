@@ -7,7 +7,6 @@ import org.west.backend.model.GameDto;
 import org.west.backend.repository.GameRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
