@@ -1,10 +1,12 @@
 import {Game} from "../types/GameTypes.ts";
-import GameCard from "../components/GameCard.tsx";
 import "../styles/ShowGameCardPages.css"
+import GameCardWishlist from "../components/GameCardWishlist.tsx";
 
 type WishlistPageProps = {
     games:Game[]
+    deleteById: (id:string) => void
 }
+
 
 export default function WishlistPage(props: Readonly<WishlistPageProps>) {
 
@@ -12,7 +14,7 @@ export default function WishlistPage(props: Readonly<WishlistPageProps>) {
         <>
             <div className="gallery">
             {
-                props.games.map((game) => <GameCard game={game} key={game.id}/>)
+                props.games.map((game) => <GameCardWishlist deleteById={props.deleteById} game={game} key={game.id}/>)
             }
             </div>
         </>
