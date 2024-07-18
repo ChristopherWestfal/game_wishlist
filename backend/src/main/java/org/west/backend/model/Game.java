@@ -13,5 +13,6 @@ public class Game {
     String id;
     String name;
     String releaseDate;
+    String note;
     Boolean fav;
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.west.backend.model.Game;
+import org.west.backend.model.GameDto;
 import org.west.backend.service.GameService;
 
 import java.util.List;
@@ -31,5 +32,11 @@ public class GameController {
     @PostMapping("/wishlist")
     public Game postGame(@RequestBody Game newGame){
         return gameService.postGame(newGame);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/wishlist/{id}")
+    public Game putGame(@PathVariable String id, @RequestBody GameDto gameDto){
+        return gameService.putGame(id, gameDto);
     }
 }

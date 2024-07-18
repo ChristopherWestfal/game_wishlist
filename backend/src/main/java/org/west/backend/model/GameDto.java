@@ -8,5 +8,6 @@ import lombok.Data;
 public class GameDto {
     String name;
     String releaseDate;
+    String note;
     Boolean fav;
 }
