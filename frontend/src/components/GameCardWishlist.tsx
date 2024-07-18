@@ -17,9 +17,7 @@ export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>)
             <article className="item-card">
                 <p>{props.game.name}</p>
                 <p>{props.game.releaseDate}</p>
-                <p>{"Fav: " + props.game.fav}</p>
-                <button onClick={handleDeleteById}>Del</button>
-
+                <button onClick={handleDeleteById}>Delete from List</button>
             </article>
 
         </>

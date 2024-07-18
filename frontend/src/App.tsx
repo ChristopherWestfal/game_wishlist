@@ -33,6 +33,13 @@ function App() {
             .catch(error => console.error("Something went wrong", error))
     }
 
+    function postGame(game:Game){
+        axios.post("api/wishlist", game)
+            .then(getAllWishedGames)
+            .catch(error => console.error("Something went wrong", error))
+        console.log(game)
+    }
+
     useEffect(() => {
         getAllApiGames();
         getAllWishedGames()
@@ -41,7 +48,7 @@ function App() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <HomePage games={apiGames}/>
+            element: <HomePage games={apiGames} postGame={postGame}/>
         },
         {
             path: "/wishlist",
