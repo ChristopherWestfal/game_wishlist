@@ -21,9 +21,9 @@ class WishedGameServiceTest {
     @BeforeEach
     void setUp(){
         testData = List.of(
-                new WishedGame("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", false),
-                new WishedGame("2", "God of War", "2018-04-20", false),
-                new WishedGame("3", "Red Dead Redemption 2", "2018-10-26", false)
+                new WishedGame("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", true),
+                new WishedGame("2", "God of War", "2018-04-20", true),
+                new WishedGame("3", "Red Dead Redemption 2", "2018-10-26", true)
         );
     }
 
@@ -53,5 +53,15 @@ class WishedGameServiceTest {
         // THEN
         assertEquals(expected,actual);
         verify(mockWishlistRepository).findAll();
+    }
+
+    @Test
+    void getAllGames_shouldDeleteById_whenCalledWithId1() {
+        // When
+        wishedGameService.deleteGameById("1");
+
+        // THEN
+        verify(mockWishlistRepository).deleteById("1");
+
     }
 }

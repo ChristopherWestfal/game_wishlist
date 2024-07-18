@@ -27,6 +27,11 @@ function App() {
             .catch(error => console.error("Something went wrong", error))
     }
 
+    function deleteById(id:string){
+        axios.delete(`/api/wishlist/${id}`)
+            .then(getAllWishedGames)
+            .catch(error => console.error("Something went wrong", error))
+    }
 
     useEffect(() => {
         getAllApiGames();
@@ -40,7 +45,7 @@ function App() {
         },
         {
             path: "/wishlist",
-            element: <WishlistPage games={wishedGames}/>
+            element: <WishlistPage games={wishedGames} deleteById={deleteById}/>
         },
 
     ])
