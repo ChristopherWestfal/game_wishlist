@@ -8,6 +8,7 @@ type GameCardProps = {
 
 export default function GameCard(props: Readonly<GameCardProps>) {
     function handleFav() {
+        props.game.note = "";
         props.postGame(props.game);
         console.log(props.game)
     }

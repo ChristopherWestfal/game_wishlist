@@ -14,6 +14,7 @@ import org.west.backend.model.Game;
 import org.west.backend.repository.GameRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -83,6 +84,28 @@ class GameControllerTest {
                                "name": "The Legend of Zelda: Breath of the Wild",
                                "releaseDate": "2017-03-03",
                                "note": "",
+                               "fav": true
+                            }
+                        """));
+    }
+
+    @Test
+    void putGame() throws Exception {
+        Game expected = new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", "Test Note", true);
+        when(mockGameRepository.findById("1")).thenReturn(Optional.ofNullable(gameTestData.getFirst()));
+        when(mockGameRepository.save(any(Game.class))).thenReturn(expected);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/wishlist")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("id", "1")
+                        .param("note", "Test Note"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                            {
+                               "id": "1",
+                               "name": "The Legend of Zelda: Breath of the Wild",
+                               "releaseDate": "2017-03-03",
+                               "note": "Test Note",
                                "fav": true
                             }
                         """));

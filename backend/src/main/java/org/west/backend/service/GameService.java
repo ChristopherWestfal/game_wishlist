@@ -3,7 +3,6 @@ package org.west.backend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.west.backend.model.Game;
-import org.west.backend.model.GameDto;
 import org.west.backend.repository.GameRepository;
 
 import java.util.List;
@@ -24,11 +23,11 @@ public class GameService {
 
     public Game postGame(Game newGame) { return gameRepository.save(newGame); }
 
-//    public Game putGame(String id, GameDto gameDto) {
-//        Game foundGame = gameRepository.findById(id).orElseThrow();
-//
-//        foundGame.setNote(gameDto.getNote());
-//
-//        return foundGame;
-//    }
+    public Game putGame(String id, String note) {
+        Game foundGame = gameRepository.findById(id).orElseThrow();
+
+        foundGame.setNote(note);
+
+        return gameRepository.save(foundGame);
+    }
 }

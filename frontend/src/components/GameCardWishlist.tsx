@@ -1,41 +1,43 @@
 import {Game} from "../types/GameTypes.ts";
-import  Modal from 'react-modal'
+import Modal from 'react-modal'
 import "../styles/GameCard.css"
 import {useState} from "react";
 
 Modal.setAppElement('#root');
 
 type GameCardWishlistProps = {
-    game:Game
-    deleteById: (id:string) => void
+    game: Game,
+    deleteById: (id: string) => void,
+    putGame:(id: string, note: string) => void
 }
 
 export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>) {
-    const[isModalOpen, setIsModalOpen] = useState(false);
-    const[isShowNoteModalOpen, setIsShowNoteModalOpen] = useState(false);
-    const[note, setNote] = useState("Place for a Note");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isShowNoteModalOpen, setIsShowNoteModalOpen] = useState(false);
+    const [note, setNote] = useState(props.game.note);
 
     function handleDeleteById() {
         props.deleteById(props.game.id);
     }
 
-    function handleAddNote(){
+    function handleAddNote() {
         setIsModalOpen(true);
-        if(note === "")
+        if (note === "")
             setNote("")
     }
 
-    function handleSaveNote(){
+    function handleSaveNote() {
         console.log(("Note saved: " + note));
-        if(note === "")
+        if (note === "")
             setNote("Place for a Note")
         props.game.note = note;
-        console.log(props.game);
         setIsModalOpen(false);
+        props.putGame(props.game.id, note);
+        console.log("ID: " + props.game.id + " Note: " + note)
     }
 
     function handleCloseModal() {
-        if(note === "")
+        if (note === "")
             setNote("Place for a Note")
         setIsModalOpen(false);
     }
@@ -54,7 +56,7 @@ export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>)
                 <p>{props.game.name}</p>
                 <p>{props.game.releaseDate}</p>
                 <p>{note}</p>
-                <button onClick={handleAddNote}>Add Note</button>
+                <button onClick={handleAddNote}>Add/Edit Note</button>
                 <button onClick={handleShowNote}>Show Note</button>
                 <button onClick={handleDeleteById}>Delete from List</button>
             </article>

@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class GameDto {
-    String name;
-    String releaseDate;
-    String note;
-    Boolean fav;
+    private String name;
+    private String releaseDate;
+    private String note;
+    private Boolean fav;
 }
