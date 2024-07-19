@@ -38,4 +38,7 @@ public class GameController {
     public Game putGame(@RequestParam String id, @RequestParam String note){
         return gameService.putGame(id, note);
     }
+
+
+
 }
