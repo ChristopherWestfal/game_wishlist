@@ -40,6 +40,12 @@ function App() {
         console.log(game)
     }
 
+    function putGame(id:string, note:string){
+        axios.put(`/api/wishlist?id=${id}&note=${note}`)
+            .then(getAllWishedGames)
+            .catch(error => console.error("Something went wrong", error))
+    }
+
     useEffect(() => {
         getAllApiGames();
         getAllWishedGames()
@@ -52,7 +58,7 @@ function App() {
         },
         {
             path: "/wishlist",
-            element: <WishlistPage games={wishedGames} deleteById={deleteById}/>
+            element: <WishlistPage games={wishedGames} deleteById={deleteById} putGame={putGame}/>
         },
 
     ])

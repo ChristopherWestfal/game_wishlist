@@ -32,4 +32,10 @@ public class GameController {
     public Game postGame(@RequestBody Game newGame){
         return gameService.postGame(newGame);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/wishlist")
+    public Game putGame(@RequestParam String id, @RequestParam String note){
+        return gameService.putGame(id, note);
+    }
 }
