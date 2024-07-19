@@ -21,9 +21,9 @@ class GameServiceTest {
     @BeforeEach
     void setUp(){
         testData = List.of(
-                new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", true),
-                new Game("2", "God of War", "2018-04-20", true),
-                new Game("3", "Red Dead Redemption 2", "2018-10-26", true)
+                new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", true),
+                new Game("2", "God of War", "2018-04-20", "", true),
+                new Game("3", "Red Dead Redemption 2", "2018-10-26", "", true)
         );
     }
 
@@ -68,7 +68,7 @@ class GameServiceTest {
     void postGame_shouldReturnGame_whenCalledWithGame(){
         // GIVEN
         Game expected = testData.getFirst();
-        Game newItem = new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", true);
+        Game newItem = new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", true);
 
         // WHEN & THEN
         when(mockGameRepository.save(any(Game.class))).thenReturn(expected);

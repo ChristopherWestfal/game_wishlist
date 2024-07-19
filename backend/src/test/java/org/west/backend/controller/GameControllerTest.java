@@ -32,7 +32,7 @@ class GameControllerTest {
     @BeforeEach
     void setUp(){
         gameTestData = List.of(
-                new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", true)
+                new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", true)
         );
     }
 
@@ -72,6 +72,7 @@ class GameControllerTest {
                                "id": "1",
                                "name": "The Legend of Zelda: Breath of the Wild",
                                "releaseDate": "2017-03-03",
+                               "note": "",
                                "fav": true
                             }
                         """))
@@ -81,6 +82,7 @@ class GameControllerTest {
                                "id": "1",
                                "name": "The Legend of Zelda: Breath of the Wild",
                                "releaseDate": "2017-03-03",
+                               "note": "",
                                "fav": true
                             }
                         """));
