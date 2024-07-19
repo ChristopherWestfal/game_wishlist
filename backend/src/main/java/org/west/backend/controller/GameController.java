@@ -34,9 +34,9 @@ public class GameController {
         return gameService.postGame(newGame);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/wishlist/{id}")
-    public Game putGame(@PathVariable String id, @RequestBody GameDto gameDto){
-        return gameService.putGame(id, gameDto);
-    }
+//    @ResponseStatus(HttpStatus.OK)
+//    @PutMapping("/wishlist/{id}")
+//    public Game putGame(@PathVariable String id, @RequestBody GameDto gameDto){
+//        return gameService.putGame(id, gameDto);
+//    }
 }

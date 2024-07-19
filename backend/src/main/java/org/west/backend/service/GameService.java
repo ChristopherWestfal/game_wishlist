@@ -24,11 +24,11 @@ public class GameService {
 
     public Game postGame(Game newGame) { return gameRepository.save(newGame); }
 
-    public Game putGame(String id, GameDto gameDto) {
-        Game foundGame = gameRepository.findById(id).orElseThrow();
-
-        foundGame.setNote(gameDto.getNote());
-
-        return foundGame;
-    }
+//    public Game putGame(String id, GameDto gameDto) {
+//        Game foundGame = gameRepository.findById(id).orElseThrow();
+//
+//        foundGame.setNote(gameDto.getNote());
+//
+//        return foundGame;
+//    }
 }
