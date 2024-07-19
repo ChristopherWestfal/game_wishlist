@@ -6,6 +6,7 @@ import org.west.backend.model.Game;
 import org.west.backend.repository.GameRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,14 @@ public class GameService {
         gameRepository.deleteById(id);
     }
 
-    public Game postGame(Game newGame) { return gameRepository.save(newGame); }
+    public Game postGame(Game newGame) {
+        Optional<Game> go = gameRepository.findById(newGame.getId());
+
+        if (go.isEmpty())
+            return gameRepository.save(newGame);
+        else
+            throw new IllegalArgumentException("A game with this ID already exists.");
+    }
 
     public Game putGame(String id, String note) {
         Game foundGame = gameRepository.findById(id).orElseThrow();
