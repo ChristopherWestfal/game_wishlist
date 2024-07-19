@@ -1,6 +1,7 @@
 import {Game} from "../types/GameTypes.ts";
 import "../styles/ShowGameCardPages.css"
 import GameCardWishlist from "../components/GameCardWishlist.tsx";
+import Header from "../components/Header.tsx";
 
 type WishlistPageProps = {
     games: Game[],
@@ -13,6 +14,7 @@ export default function WishlistPage(props: Readonly<WishlistPageProps>) {
 
     return (
         <>
+            <Header/>
             <div className="gallery">
                 {
                     props.games.map((game) => <GameCardWishlist
