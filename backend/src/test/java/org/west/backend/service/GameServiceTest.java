@@ -80,6 +80,15 @@ class GameServiceTest {
     }
 
     @Test
+    void postGame_whenGameWithIdExists_thenThrowException() {
+        when(mockGameRepository.findById(testData.getFirst().getId())).thenReturn(Optional.of(testData.getFirst()));
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> gameService.postGame(testData.getFirst()));
+
+        assertEquals("A game with this ID already exists.", exception.getMessage());
+    }
+
+    @Test
     void putGame_shouldReturnGameWithUpdatedNote_shenCalledWithIdAndNote(){
         String id = "1";
         String note = "Test Note";
