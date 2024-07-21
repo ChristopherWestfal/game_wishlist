@@ -46,8 +46,8 @@ function App() {
             .then(getAllWishedGames)
             .catch(error => {
                 alert("Game already added");
-                console.error("Game already added", error)})
-        console.log(game)
+                console.error("Game already added", error)
+            })
     }
 
     function putGame(id:string, note:string){
