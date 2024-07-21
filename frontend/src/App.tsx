@@ -16,7 +16,7 @@ function App() {
             .then(response => {
                 setApiGames(response.data.games);
             })
-        .catch(error => console.error("Something went wrong", error))
+        .catch(error => console.error("No API available", error))
     }
 
     function getAllWishedGames() {
@@ -24,26 +24,32 @@ function App() {
             .then(response => {
                 setWishedGames(response.data);
             })
-            .catch(error => console.error("Something went wrong", error))
+            .catch(error => console.error("No Database available", error))
     }
 
     function deleteById(id:string){
         axios.delete(`/api/wishlist/${id}`)
             .then(getAllWishedGames)
-            .catch(error => console.error("Something went wrong", error))
+            .catch(error => console.error("No game with such ID in wishlist", error))
     }
 
     function postGame(game:Game){
         axios.post("api/wishlist", game)
+            .then(response => {
+                if(JSON.stringify(response.data !== null))
+                    alert("Game successfully added");
+            })
             .then(getAllWishedGames)
-            .catch(error => console.error("Something went wrong", error))
+            .catch(error => {
+                alert("Game already added");
+                console.error("Game already added", error)})
         console.log(game)
     }
 
     function putGame(id:string, note:string){
         axios.put(`/api/wishlist?id=${id}&note=${note}`)
             .then(getAllWishedGames)
-            .catch(error => console.error("Something went wrong", error))
+            .catch(error => console.error("No game with such ID in wishlist", error))
     }
 
     useEffect(() => {
