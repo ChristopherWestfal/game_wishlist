@@ -2,6 +2,7 @@ package org.west.backend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.west.backend.exceptions.InvalidIdException;
 import org.west.backend.model.Game;
 import org.west.backend.repository.GameRepository;
 
@@ -31,8 +32,8 @@ public class GameService {
             throw new IllegalArgumentException("A game with this ID already exists.");
     }
 
-    public Game putGame(String id, String note) {
-        Game foundGame = gameRepository.findById(id).orElseThrow();
+    public Game putGame(String id, String note) throws InvalidIdException {
+        Game foundGame = gameRepository.findById(id).orElseThrow(() -> new InvalidIdException("Game with Id " + id + " not found"));
 
         foundGame.setNote(note);
 

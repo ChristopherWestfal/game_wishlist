@@ -27,13 +27,11 @@ export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>)
     }
 
     function handleSaveNote() {
-        console.log(("Note saved: " + note));
         if (note === "")
             setNote("Place for a Note")
         props.game.note = note;
         setIsModalOpen(false);
         props.putGame(props.game.id, note);
-        console.log("ID: " + props.game.id + " Note: " + note)
     }
 
     function handleCloseModal() {

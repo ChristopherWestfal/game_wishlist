@@ -2,6 +2,7 @@ package org.west.backend.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.west.backend.exceptions.InvalidIdException;
 import org.west.backend.model.Game;
 import org.west.backend.repository.GameRepository;
 
@@ -89,7 +90,7 @@ class GameServiceTest {
     }
 
     @Test
-    void putGame_shouldReturnGameWithUpdatedNote_shenCalledWithIdAndNote(){
+    void putGame_shouldReturnGameWithUpdatedNote_shenCalledWithIdAndNote() throws InvalidIdException {
         String id = "1";
         String note = "Test Note";
 
