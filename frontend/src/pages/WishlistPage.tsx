@@ -1,10 +1,10 @@
-import {Game} from "../types/GameTypes.ts";
+import {ApiGame} from "../types/GameTypes.ts";
 import "../styles/ShowGameCardPages.css"
 import GameCardWishlist from "../components/GameCardWishlist.tsx";
 import Header from "../components/Header.tsx";
 
 type WishlistPageProps = {
-    games: Game[],
+    games: ApiGame[],
     deleteById: (id: string) => void,
     putGame:(id: string, note: string) => void
 }

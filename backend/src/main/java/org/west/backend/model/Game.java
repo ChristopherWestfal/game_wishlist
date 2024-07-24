@@ -12,7 +12,7 @@ public class Game {
     @Id
     private String id;
     private String name;
-    private String releaseDate;
+    private String released;
     private String note;
     private Boolean fav;
 }

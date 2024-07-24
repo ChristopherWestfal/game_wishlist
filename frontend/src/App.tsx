@@ -3,21 +3,23 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import HomePage from "./pages/HomePage.tsx";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {Game} from "./types/GameTypes.ts";
+import {ApiGame} from "./types/GameTypes.ts";
 import WishlistPage from "./pages/WishlistPage.tsx";
 
 function App() {
 
-    const [apiGames, setApiGames] = useState<Game[]>([]);
-    const [wishedGames, setWishedGames] = useState<Game[]>([]);
+    const [apiGames, setApiGames] = useState<ApiGame[]>([]);
+    const [wishedGames, setWishedGames] = useState<ApiGame[]>([]);
+
 
     function getAllApiGames() {
-        axios.get("http://localhost:3000/info")
+        axios.get("/api/apigames")
             .then(response => {
-                setApiGames(response.data.games);
+                setApiGames(response.data);
             })
-        .catch(error => console.error("No API available", error))
+            .catch(error => console.error("No API available", error))
     }
+
 
     function getAllWishedGames() {
         axios.get("/api/wishlist")
@@ -37,7 +39,7 @@ function App() {
             .catch(error => console.error("No game with such ID in wishlist", error))
     }
 
-    function postGame(game:Game){
+    function postGame(game:ApiGame){
         axios.post("api/wishlist", game)
             .then(response => {
                 if(JSON.stringify(response.data !== null))
@@ -59,6 +61,7 @@ function App() {
             .then(getAllWishedGames)
             .catch(error => console.error("No game with such ID in wishlist", error))
     }
+
 
     useEffect(() => {
         getAllApiGames();
