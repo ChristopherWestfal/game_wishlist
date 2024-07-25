@@ -10,16 +10,38 @@ function App() {
 
     const [apiGames, setApiGames] = useState<ApiGame[]>([]);
     const [wishedGames, setWishedGames] = useState<ApiGame[]>([]);
-
+    const [next, setNext] = useState<string | null>(null)
+    const [prev, setPrev] = useState<string | null>(null)
 
     function getAllApiGames() {
         axios.get("/api/apigames")
             .then(response => {
-                setApiGames(response.data);
+                setNext(response.data.next);
+                setPrev(response.data.previous);
+                setApiGames(response.data.results);
             })
             .catch(error => console.error("No API available", error))
     }
 
+    function getAllApiGamesNext() {
+        axios.get("/api/apigames/next")
+            .then(response => {
+                setNext(response.data.next);
+                setPrev(response.data.previous);
+                setApiGames(response.data.results);
+            })
+            .catch(error => console.error("No API available", error))
+    }
+
+    function getAllApiGamesPrev() {
+        axios.get("/api/apigames/prev")
+            .then(response => {
+                setNext(response.data.next);
+                setPrev(response.data.previous);
+                setApiGames(response.data.results);
+            })
+            .catch(error => console.error("No API available", error))
+    }
 
     function getAllWishedGames() {
         axios.get("/api/wishlist")
@@ -62,7 +84,6 @@ function App() {
             .catch(error => console.error("No game with such ID in wishlist", error))
     }
 
-
     useEffect(() => {
         getAllApiGames();
         getAllWishedGames()
@@ -71,7 +92,7 @@ function App() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <HomePage games={apiGames} postGame={postGame}/>
+            element: <HomePage games={apiGames} postGame={postGame} next={next} prev={prev} getAllApiGamesNext={getAllApiGamesNext} getAllApiGamesPrev={getAllApiGamesPrev}/>
         },
         {
             path: "/wishlist",

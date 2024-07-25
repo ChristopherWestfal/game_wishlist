@@ -3,67 +3,67 @@ package org.west.backend.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import org.west.backend.model.ApiGame;
 import org.west.backend.model.ApiResponse;
-
-import java.io.IOException;
-import java.util.List;
-
 
 @Service
 public class GameApiService {
 
     private final RestClient restClient;
-    // private String nextUrl, prevUrl;
 
-    public GameApiService(@Value("${app.game.api}") String baseUrl){
+    @Value("${app.game.api}")
+    private String baseUrl;
+
+    private String nextUrl = "";
+    private String prevUrl = baseUrl;
+
+
+    public GameApiService(){
         restClient = RestClient.builder()
-                .baseUrl(baseUrl)
                 .build();
     }
 
-    public List<ApiGame> getAllApiGames() throws IOException {
+    public ApiResponse getAllApiGames() {
         ApiResponse response = restClient.get()
+                .uri(baseUrl)
                 .retrieve()
                 .body(ApiResponse.class);
-        if(response != null) {
-            return response.getResults();
-        }
-        else throw new IOException("No Games found!");
+        System.out.println(response.getNext());
+        System.out.println(response.getPrevious());
+
+        prevUrl = response.getPrevious();
+        nextUrl = response.getNext();
+
+        return response;
     }
 
-//    public List<ApiGame> getAllApiGamesNext() throws IOException {
-//        ApiResponse response = restClient.get()
-//                .uri(nextUrl)
-//                .retrieve()
-//                .body(ApiResponse.class);
-//        if(response != null) {
-//            nextUrl = extractParams(response.getNext());
-//            prevUrl = extractParams(response.getPrev());
-//            return response.getResults();
-//        }
-//        else throw new IOException("No Games found!");
-//    }
-//
-//    public List<ApiGame> getAllApiGamesPrev() throws IOException {
-//        ApiResponse response = restClient.get()
-//                .uri(prevUrl)
-//                .retrieve()
-//                .body(ApiResponse.class);
-//        if(response != null) {
-//            nextUrl = extractParams(response.getNext());
-//            prevUrl = extractParams(response.getPrev());
-//            return response.getResults();
-//        }
-//        else throw new IOException("No Games found!");
-//    }
-//
-//    private String extractParams(String url) {
-//        if (url == null) {
-//            return null;
-//        }
-//        int index = url.indexOf('&');
-//        return (index == -1) ? "" : url.substring(index);
-//    }
 
+    public ApiResponse getAllApiGamesNext(){
+        ApiResponse response = restClient.get()
+                .uri(nextUrl)
+                .retrieve()
+                .body(ApiResponse.class);
+        System.out.println(response.getNext());
+        System.out.println(prevUrl);
+
+        prevUrl = response.getPrevious();
+        nextUrl = response.getNext();
+
+
+        return response;
+    }
+
+    public ApiResponse getAllApiGamesPrev(){
+        ApiResponse response = restClient.get()
+                .uri(prevUrl)
+                .retrieve()
+                .body(ApiResponse.class);
+
+        System.out.println(response.getNext());
+        System.out.println(prevUrl);
+
+        prevUrl = response.getPrevious();
+        nextUrl = response.getNext();
+
+        return response;
+    }
 }

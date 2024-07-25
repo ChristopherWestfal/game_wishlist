@@ -5,11 +5,23 @@ import Header from "../components/Header.tsx";
 
 type HomePageProps = {
     games: ApiGame[],
-    postGame: (game: ApiGame) => void
-
+    postGame: (game: ApiGame) => void,
+    next: string|null,
+    prev:string|null,
+    getAllApiGamesNext: () => void,
+    getAllApiGamesPrev: () => void,
 }
 
 export default function HomePage(props: Readonly<HomePageProps>) {
+
+    function handleNext(){
+        props.getAllApiGamesNext();
+    }
+
+    function handlePrev(){
+        props.getAllApiGamesPrev();
+    }
+
     return (
         <>
             <Header/>
@@ -20,8 +32,8 @@ export default function HomePage(props: Readonly<HomePageProps>) {
             </div>
 
             <div>
-                <button >Previous</button>
-                <button >Next</button>
+                <button onClick={handlePrev}>Previous</button>
+                <button onClick={handleNext}>Next</button>
             </div>
         </>
     );

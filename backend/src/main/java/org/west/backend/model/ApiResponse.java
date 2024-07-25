@@ -12,5 +12,5 @@ import java.util.List;
 public class ApiResponse {
     private List<ApiGame> results;
     private String next;
-    private String prev;
+    private String previous;
 }
