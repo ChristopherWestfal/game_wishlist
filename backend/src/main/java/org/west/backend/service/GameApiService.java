@@ -1,10 +1,12 @@
 package org.west.backend.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.west.backend.model.ApiResponse;
 
+@AllArgsConstructor
 @Service
 public class GameApiService {
 
