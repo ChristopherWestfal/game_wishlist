@@ -1,6 +1,7 @@
 #Project
 .idea
 *.iml
+node_modules
 
 #Backend
 backend/HELP.md
@@ -17,3 +18,4 @@ frontend/node_modules
 frontend/dist
 frontend/dist-ssr
 frontend/*.local
+
