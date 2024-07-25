@@ -104,7 +104,7 @@ class GameControllerTest {
                             {
                                "id": "1",
                                "name": "The Legend of Zelda: Breath of the Wild",
-                               "releaseDate": "2017-03-03",
+                               "released": "2017-03-03",
                                "note": "Test Note",
                                "fav": true
                             }
