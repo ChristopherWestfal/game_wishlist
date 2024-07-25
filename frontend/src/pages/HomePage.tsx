@@ -32,8 +32,8 @@ export default function HomePage(props: Readonly<HomePageProps>) {
             </div>
 
             <div>
-                <button onClick={handlePrev}>Previous</button>
-                <button onClick={handleNext}>Next</button>
+                <button onClick={handlePrev} disabled={props.prev === ""}>Previous</button>
+                <button onClick={handleNext} disabled={props.next === ""}>Next</button>
             </div>
         </>
     );

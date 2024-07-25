@@ -18,6 +18,7 @@ function App() {
             .then(response => {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
+                console.log(response.data.previous)
                 setApiGames(response.data.results);
             })
             .catch(error => console.error("No API available", error))
@@ -28,6 +29,7 @@ function App() {
             .then(response => {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
+                console.log(response.data.previous)
                 setApiGames(response.data.results);
             })
             .catch(error => console.error("No API available", error))
@@ -38,6 +40,7 @@ function App() {
             .then(response => {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
+                console.log(response.data.previous)
                 setApiGames(response.data.results);
             })
             .catch(error => console.error("No API available", error))

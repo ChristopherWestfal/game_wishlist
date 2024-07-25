@@ -29,11 +29,21 @@ public class GameApiService {
                 .uri(baseUrl)
                 .retrieve()
                 .body(ApiResponse.class);
-        System.out.println(response.getNext());
-        System.out.println(response.getPrevious());
 
-        prevUrl = response.getPrevious();
-        nextUrl = response.getNext();
+        if(response.getPrevious() != null) {
+            prevUrl = response.getPrevious();
+            response.setPrevious("1");
+        }
+        else
+            response.setPrevious("");
+
+        if(response.getNext() != null) {
+            nextUrl = response.getNext();
+            response.setNext("1");
+        }
+        else
+            response.setNext("");
+
 
         return response;
     }
@@ -44,11 +54,20 @@ public class GameApiService {
                 .uri(nextUrl)
                 .retrieve()
                 .body(ApiResponse.class);
-        System.out.println(response.getNext());
-        System.out.println(prevUrl);
 
-        prevUrl = response.getPrevious();
-        nextUrl = response.getNext();
+        if(response.getPrevious() != null) {
+            prevUrl = response.getPrevious();
+            response.setPrevious("1");
+        }
+        else
+            response.setPrevious("");
+
+        if(response.getNext() != null) {
+            nextUrl = response.getNext();
+            response.setNext("1");
+        }
+        else
+            response.setNext("");
 
 
         return response;
@@ -60,11 +79,19 @@ public class GameApiService {
                 .retrieve()
                 .body(ApiResponse.class);
 
-        System.out.println(response.getNext());
-        System.out.println(prevUrl);
+        if(response.getPrevious() != null) {
+            prevUrl = response.getPrevious();
+            response.setPrevious("1");
+        }
+        else
+            response.setPrevious("");
 
-        prevUrl = response.getPrevious();
-        nextUrl = response.getNext();
+        if(response.getNext() != null) {
+            nextUrl = response.getNext();
+            response.setNext("1");
+        }
+        else
+            response.setNext("");
 
         return response;
     }
