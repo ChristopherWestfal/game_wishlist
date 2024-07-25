@@ -1,6 +1,5 @@
 package org.west.backend.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -15,7 +14,7 @@ import java.util.List;
 public class GameApiService {
 
     private final RestClient restClient;
-    private String nextUrl, prevUrl;
+    // private String nextUrl, prevUrl;
 
     public GameApiService(@Value("${app.game.api}") String baseUrl){
         restClient = RestClient.builder()
