@@ -46,7 +46,7 @@ public class GlobalExceptionHandlerTest {
     public void testHandleIdNotFoundException() throws Exception {
         // Wenn der Service mit der Fake-Datenbank (Mockito) aufgerufen wird und ein Item vom Typ DtoItem hinzugefügt
         // wird eine Exception geworfen
-        Mockito.when(gameService.putGame(Mockito.any(String.class), Mockito.any(String.class))).thenThrow(new InvalidIdException("Game with ID 123 not found"));
+        Mockito.when(gameService.putGame(Mockito.any(Integer.class), Mockito.any(String.class))).thenThrow(new InvalidIdException("Game with ID 123 not found"));
 
         // Fake-Post auf route /api/add
         mockMvc.perform(MockMvcRequestBuilders.put("/api/wishlist")

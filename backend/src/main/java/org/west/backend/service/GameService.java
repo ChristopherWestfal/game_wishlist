@@ -19,7 +19,7 @@ public class GameService {
         return gameRepository.findAll();
     }
 
-    public void deleteGameById(String id) {
+    public void deleteGameById(int id) {
         gameRepository.deleteById(id);
     }
 
@@ -32,7 +32,7 @@ public class GameService {
             throw new IllegalArgumentException("A game with this ID already exists.");
     }
 
-    public Game putGame(String id, String note) throws InvalidIdException {
+    public Game putGame(int id, String note) throws InvalidIdException {
         Game foundGame = gameRepository.findById(id).orElseThrow(() -> new InvalidIdException("Game with Id " + id + " not found"));
 
         foundGame.setNote(note);

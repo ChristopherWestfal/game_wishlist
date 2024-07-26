@@ -33,7 +33,7 @@ class GameControllerTest {
     @BeforeEach
     void setUp(){
         gameTestData = List.of(
-                new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", true)
+                new Game(1, "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", true)
         );
     }
 
@@ -54,12 +54,12 @@ class GameControllerTest {
 
     @Test
     void deleteGameById() throws Exception {
-        doNothing().when(mockGameRepository).deleteById("1");
+        doNothing().when(mockGameRepository).deleteById(1);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/wishlist/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        verify(mockGameRepository).deleteById("1");
+        verify(mockGameRepository).deleteById(1);
     }
 
     @Test
@@ -70,7 +70,7 @@ class GameControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                             {
-                               "id": "1",
+                               "id": 1,
                                "name": "The Legend of Zelda: Breath of the Wild",
                                "released": "2017-03-03",
                                "note": "",
@@ -80,7 +80,7 @@ class GameControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().json("""
                             {
-                               "id": "1",
+                               "id": 1,
                                "name": "The Legend of Zelda: Breath of the Wild",
                                "released": "2017-03-03",
                                "note": "",
@@ -91,8 +91,8 @@ class GameControllerTest {
 
     @Test
     void putGame() throws Exception {
-        Game expected = new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", "Test Note", true);
-        when(mockGameRepository.findById("1")).thenReturn(Optional.ofNullable(gameTestData.getFirst()));
+        Game expected = new Game(1, "The Legend of Zelda: Breath of the Wild", "2017-03-03", "Test Note", true);
+        when(mockGameRepository.findById(1)).thenReturn(Optional.ofNullable(gameTestData.getFirst()));
         when(mockGameRepository.save(any(Game.class))).thenReturn(expected);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/wishlist")
@@ -102,7 +102,7 @@ class GameControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
                             {
-                               "id": "1",
+                               "id": 1,
                                "name": "The Legend of Zelda: Breath of the Wild",
                                "released": "2017-03-03",
                                "note": "Test Note",

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import org.west.backend.model.Game;
 
 @Repository
-public interface GameRepository extends MongoRepository<Game, String> {
+public interface GameRepository extends MongoRepository<Game, Integer> {
 }

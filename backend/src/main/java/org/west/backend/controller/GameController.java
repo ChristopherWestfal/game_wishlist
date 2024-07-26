@@ -25,8 +25,7 @@ public class GameController {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/wishlist/{id}")
     public void deleteGameById(@PathVariable int id){
-        String stringId = String.valueOf(id);
-        gameService.deleteGameById(stringId);
+        gameService.deleteGameById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -38,7 +37,6 @@ public class GameController {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/wishlist")
     public Game putGame(@RequestParam int id, @RequestParam String note) throws InvalidIdException {
-        String stringId = String.valueOf(id);
-        return gameService.putGame(stringId, note);
+        return gameService.putGame(id, note);
     }
 }
