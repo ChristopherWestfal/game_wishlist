@@ -1,14 +1,15 @@
-import {Game} from "../types/GameTypes.ts";
+import {ApiGame} from "../types/GameTypes.ts";
 import "../styles/GameCard.css"
 
 type GameCardProps = {
-    game:Game
-    postGame: (game: Game) => void
+    game:ApiGame
+    postGame: (game: ApiGame) => void
 }
 
 export default function GameCard(props: Readonly<GameCardProps>) {
     function handleFav() {
-        props.game.note = "";
+        props.game.note = "Place for a Note";
+        props.game.fav = true;
         props.postGame(props.game);
     }
 
@@ -16,10 +17,10 @@ export default function GameCard(props: Readonly<GameCardProps>) {
         <>
             <article className="item-card">
                 <p>{props.game.name}</p>
-                <p>{props.game.releaseDate}</p>
+                <p>{props.game.released}</p>
+                <p>Rating: {props.game.rating} / {props.game.rating_top}</p>
                 <button onClick={handleFav}>Add to List</button>
             </article>
-
         </>
     );
 }

@@ -1,4 +1,4 @@
-import {Game} from "../types/GameTypes.ts";
+import {ApiGame} from "../types/GameTypes.ts";
 import Modal from 'react-modal'
 import "../styles/GameCard.css"
 import {useState} from "react";
@@ -6,9 +6,9 @@ import {useState} from "react";
 Modal.setAppElement('#root');
 
 type GameCardWishlistProps = {
-    game: Game,
-    deleteById: (id: string) => void,
-    putGame:(id: string, note: string) => void
+    game: ApiGame,
+    deleteById: (id: number) => void,
+    putGame:(id: number, note: string) => void
 }
 
 export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>) {
@@ -52,7 +52,7 @@ export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>)
         <>
             <article className="item-card">
                 <p>{props.game.name}</p>
-                <p>{props.game.releaseDate}</p>
+                <p>Released: {props.game.released}</p>
                 <p>{note}</p>
                 <button onClick={handleAddNote}>Add/Edit Note</button>
                 <button onClick={handleShowNote}>Show Note</button>

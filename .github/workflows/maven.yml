@@ -17,4 +17,6 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
+      env:
+        GAME_API: ${{secrets.GAME_API}}
       run: mvn -B package --file backend/pom.xml
