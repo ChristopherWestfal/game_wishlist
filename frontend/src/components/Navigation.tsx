@@ -10,6 +10,9 @@ export default function Navigation() {
             <li>
                 <Link to={"/wishlist"}>Wishlist</Link>
             </li>
+            <li>
+                <Link to={"https://rawg.io/"}>Database provided by rawg.io</Link>
+            </li>
         </ul>
     )
 }
