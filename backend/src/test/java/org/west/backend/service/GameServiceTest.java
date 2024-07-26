@@ -23,9 +23,9 @@ class GameServiceTest {
     @BeforeEach
     void setUp(){
         testData = List.of(
-                new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", true),
-                new Game("2", "God of War", "2018-04-20", "", true),
-                new Game("3", "Red Dead Redemption 2", "2018-10-26", "", true)
+                new Game(1, "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", true),
+                new Game(2, "God of War", "2018-04-20", "", true),
+                new Game(3, "Red Dead Redemption 2", "2018-10-26", "", true)
         );
     }
 
@@ -60,9 +60,9 @@ class GameServiceTest {
     @Test
     void getAllGames_shouldDeleteById_whenCalledWithId1() {
         // When
-        gameService.deleteGameById("1");
+        gameService.deleteGameById(1);
         // THEN
-        verify(mockGameRepository).deleteById("1");
+        verify(mockGameRepository).deleteById(1);
 
     }
 
@@ -70,7 +70,7 @@ class GameServiceTest {
     void postGame_shouldReturnGame_whenCalledWithGame(){
         // GIVEN
         Game expected = testData.getFirst();
-        Game newItem = new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", true);
+        Game newItem = new Game(1, "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", true);
 
         // WHEN & THEN
         when(mockGameRepository.save(any(Game.class))).thenReturn(expected);
@@ -91,10 +91,10 @@ class GameServiceTest {
 
     @Test
     void putGame_shouldReturnGameWithUpdatedNote_shenCalledWithIdAndNote() throws InvalidIdException {
-        String id = "1";
+        int id = 1;
         String note = "Test Note";
 
-        Game expected = new Game("1", "The Legend of Zelda: Breath of the Wild", "2017-03-03", "Test Note", true);
+        Game expected = new Game(1, "The Legend of Zelda: Breath of the Wild", "2017-03-03", "Test Note", true);
 
         when(mockGameRepository.findById(id)).thenReturn(Optional.of(testData.getFirst()));
         when(mockGameRepository.save(any(Game.class))).thenReturn(expected);

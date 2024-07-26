@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("games")
 public class Game {
     @Id
-    private String id;
+    private int id;
     private String name;
     private String released;
     private String note;
