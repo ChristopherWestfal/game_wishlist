@@ -3,7 +3,7 @@ name: "Deploy App"
 on:
   push:
     branches:
-      - release/1.0.0
+      - master
 
 jobs:
   build-frontend:
