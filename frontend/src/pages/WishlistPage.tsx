@@ -5,8 +5,8 @@ import Header from "../components/Header.tsx";
 
 type WishlistPageProps = {
     games: ApiGame[],
-    deleteById: (id: string) => void,
-    putGame:(id: string, note: string) => void
+    deleteById: (id: number) => void,
+    putGame:(id: number, note: string) => void
 }
 
 

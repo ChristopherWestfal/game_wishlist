@@ -54,7 +54,7 @@ function App() {
             .catch(error => console.error("No Database available", error))
     }
 
-    function deleteById(id:string){
+    function deleteById(id:number){
         axios.delete(`/api/wishlist/${id}`)
             .then(response => {
                 if(JSON.stringify(response.data !== null))
@@ -77,7 +77,7 @@ function App() {
             })
     }
 
-    function putGame(id:string, note:string){
+    function putGame(id:number, note:string){
         axios.put(`/api/wishlist?id=${id}&note=${note}`)
             .then(response => {
                 if(JSON.stringify(response.data !== null))
