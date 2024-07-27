@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Sidenav from "../components/Sidenav.tsx";
 import Typography from "@mui/material/Typography";
 import Navbar from "../components/Navbar.tsx";
+import Grid from '@mui/material/Grid';
 
 type WishlistPageProps = {
     games: ApiGame[],
@@ -23,6 +24,15 @@ export default function WishlistPage(props: Readonly<WishlistPageProps>) {
                 <Sidenav/>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                     <Typography paragraph>
+                        <Grid container spacing={2}>
+                            <Grid item xs={8}>
+
+                            </Grid>
+                            <Grid item xs={4}>
+
+                            </Grid>
+                        </Grid>
+
                         <div className="gallery">
                             {
                                 props.games.map((game) => <GameCardWishlist

@@ -5,6 +5,7 @@ import Sidenav from "../components/Sidenav.tsx";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Navbar from "../components/Navbar.tsx";
+import Grid from '@mui/material/Grid';
 
 type HomePageProps = {
     games: ApiGame[],
