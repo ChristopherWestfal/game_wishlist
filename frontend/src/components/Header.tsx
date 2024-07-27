@@ -1,5 +1,5 @@
 import Navigation from "./Navigation.tsx";
-import "../styles/Header.css"
+// import "../styles/Header.css"
 
 export default function Header () {
     return (

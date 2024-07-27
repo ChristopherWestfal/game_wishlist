@@ -1,7 +1,9 @@
 import {ApiGame} from "../types/GameTypes.ts";
 import "../styles/ShowGameCardPages.css"
 import GameCardWishlist from "../components/GameCardWishlist.tsx";
-import Header from "../components/Header.tsx";
+import Box from "@mui/material/Box";
+import Sidenav from "../components/Sidenav.tsx";
+import Typography from "@mui/material/Typography";
 
 type WishlistPageProps = {
     games: ApiGame[],
@@ -13,17 +15,25 @@ type WishlistPageProps = {
 export default function WishlistPage(props: Readonly<WishlistPageProps>) {
 
     return (
-        <>
-            <Header/>
-            <div className="gallery">
-                {
-                    props.games.map((game) => <GameCardWishlist
-                                                                putGame={props.putGame}
-                                                                deleteById={props.deleteById}
-                                                                game={game}
-                                                                key={game.id}/>)
-                }
-            </div>
-        </>
+        <Box sx={{ display: 'flex' }}>
+            <Sidenav/>
+
+            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                <Typography paragraph>
+                    Wishlist
+                </Typography>
+                <Typography paragraph>
+                    <div className="gallery">
+                        {
+                            props.games.map((game) => <GameCardWishlist
+                                putGame={props.putGame}
+                                deleteById={props.deleteById}
+                                game={game}
+                                key={game.id}/>)
+                        }
+                    </div>
+                </Typography>
+            </Box>
+        </Box>
     );
 }
