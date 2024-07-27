@@ -34,7 +34,7 @@ export default function GameCard(props: Readonly<GameCardProps>) {
 
     return (
         <Box sx={{ minWidth: 300 }}>
-            <Card sx={{ maxWidth: 100 + "%", height: 150 }}>{card}</Card>
+            <Card sx={{ maxWidth: 100 + "%", height: 140 }}>{card}</Card>
         </Box>
     );
 }

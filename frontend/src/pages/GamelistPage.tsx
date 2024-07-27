@@ -16,7 +16,7 @@ type HomePageProps = {
     getAllApiGamesPrev: () => void,
 }
 
-export default function HomePage(props: Readonly<HomePageProps>) {
+export default function GamelistPage(props: Readonly<HomePageProps>) {
 
     const pageName = "Gamelist";
 
@@ -40,11 +40,20 @@ export default function HomePage(props: Readonly<HomePageProps>) {
                             {
                                 props.games.map((game) => <Grid item xs={3}> <GameCard game={game} key={game.id} postGame={props.postGame}/></Grid>)
                             }
+                            <Grid item xs={12}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Button variant="contained" onClick={handlePrev} disabled={props.prev === ""}>
+                                        Previous
+                                    </Button>
+                                    <Box sx={{marginTop: '5px'}}>
+                                        <span>Seitenzahl</span>
+                                    </Box>
+                                    <Button variant="contained" onClick={handleNext} disabled={props.next === ""}>
+                                        Next
+                                    </Button>
+                                </Box>
+                            </Grid>
                         </Grid>
-                        <div>
-                            <Button variant="contained" onClick={handlePrev} disabled={props.prev === ""}>Previous</Button>
-                            <Button variant="contained" onClick={handleNext} disabled={props.next === ""}>Next</Button>
-                        </div>
                     </Typography>
                 </Box>
             </Box>
