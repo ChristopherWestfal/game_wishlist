@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar.tsx";
 import Grid from '@mui/material/Grid';
 import {Button} from "@mui/material";
 
-type HomePageProps = {
+type GamelistProps = {
     games: ApiGame[],
     postGame: (game: ApiGame) => void,
     next: string|null,
@@ -16,7 +16,7 @@ type HomePageProps = {
     getAllApiGamesPrev: () => void,
 }
 
-export default function GamelistPage(props: Readonly<HomePageProps>) {
+export default function GamelistPage(props: Readonly<GamelistProps>) {
 
     const pageName = "Gamelist";
 
@@ -35,10 +35,14 @@ export default function GamelistPage(props: Readonly<HomePageProps>) {
             <Box sx={{ display: 'flex' }}>
                 <Sidenav/>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                    <Typography paragraph>
+                    <Typography component="div" paragraph>
                         <Grid container spacing={1}>
                             {
-                                props.games.map((game) => <Grid item xs={3}> <GameCard game={game} key={game.id} postGame={props.postGame}/></Grid>)
+                                props.games.map((game) => (
+                                    <Grid item xs={3} key={game.id}> {/* Set the key here */}
+                                        <GameCard game={game} postGame={props.postGame} />
+                                    </Grid>
+                                ))
                             }
                             <Grid item xs={12}>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
