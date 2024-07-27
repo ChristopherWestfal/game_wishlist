@@ -4,6 +4,7 @@ import GameCardWishlist from "../components/GameCardWishlist.tsx";
 import Box from "@mui/material/Box";
 import Sidenav from "../components/Sidenav.tsx";
 import Typography from "@mui/material/Typography";
+import Navbar from "../components/Navbar.tsx";
 
 type WishlistPageProps = {
     games: ApiGame[],
@@ -15,25 +16,28 @@ type WishlistPageProps = {
 export default function WishlistPage(props: Readonly<WishlistPageProps>) {
 
     return (
-        <Box sx={{ display: 'flex' }}>
-            <Sidenav/>
+        <>
+            <Navbar/>
+            <Box sx={{ display: 'flex' }}>
+                <Sidenav/>
 
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                <Typography paragraph>
-                    Wishlist
-                </Typography>
-                <Typography paragraph>
-                    <div className="gallery">
-                        {
-                            props.games.map((game) => <GameCardWishlist
-                                putGame={props.putGame}
-                                deleteById={props.deleteById}
-                                game={game}
-                                key={game.id}/>)
-                        }
-                    </div>
-                </Typography>
+                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                    <Typography paragraph>
+                        Wishlist
+                    </Typography>
+                    <Typography paragraph>
+                        <div className="gallery">
+                            {
+                                props.games.map((game) => <GameCardWishlist
+                                    putGame={props.putGame}
+                                    deleteById={props.deleteById}
+                                    game={game}
+                                    key={game.id}/>)
+                            }
+                        </div>
+                    </Typography>
+                </Box>
             </Box>
-        </Box>
+        </>
     );
 }
