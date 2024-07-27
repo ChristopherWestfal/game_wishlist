@@ -1,11 +1,11 @@
 import {ApiGame} from "../types/GameTypes.ts";
 import GameCard from "../components/GameCard.tsx";
-import "../styles/ShowGameCardPages.css"
 import Sidenav from "../components/Sidenav.tsx";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Navbar from "../components/Navbar.tsx";
 import Grid from '@mui/material/Grid';
+import {Button} from "@mui/material";
 
 type HomePageProps = {
     games: ApiGame[],
@@ -18,6 +18,8 @@ type HomePageProps = {
 
 export default function HomePage(props: Readonly<HomePageProps>) {
 
+    const pageName = "Gamelist";
+
     function handleNext(){
         props.getAllApiGamesNext();
     }
@@ -28,21 +30,20 @@ export default function HomePage(props: Readonly<HomePageProps>) {
 
     return (
         <>
-            <Navbar/>
+            <Navbar pageName={pageName}/>
             <Box height={50}/>
             <Box sx={{ display: 'flex' }}>
                 <Sidenav/>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                     <Typography paragraph>
-                        <div className="gallery">
+                        <Grid container spacing={2}>
                             {
-                                props.games.map((game) => <GameCard game={game} key={game.id} postGame={props.postGame}/>)
+                                props.games.map((game) => <Grid item xs={3}> <GameCard game={game} key={game.id} postGame={props.postGame}/></Grid>)
                             }
-                        </div>
-
+                        </Grid>
                         <div>
-                            <button onClick={handlePrev} disabled={props.prev === ""}>Previous</button>
-                            <button onClick={handleNext} disabled={props.next === ""}>Next</button>
+                            <Button variant="contained" onClick={handlePrev} disabled={props.prev === ""}>Previous</Button>
+                            <Button variant="contained" onClick={handleNext} disabled={props.next === ""}>Next</Button>
                         </div>
                     </Typography>
                 </Box>

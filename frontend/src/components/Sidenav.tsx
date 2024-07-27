@@ -11,9 +11,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import {useNavigate} from "react-router-dom";
 import {useAppStore} from "../AppStore.tsx";
+import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 
 const drawerWidth = 240;
 
@@ -97,7 +98,7 @@ export default function Sidenav() {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <InboxIcon />
+                                <VideogameAssetIcon />
                             </ListItemIcon>
                             <ListItemText primary="Gamelist" sx={{ opacity: open ? 1 : 0 }}/>
                         </ListItemButton>
@@ -117,7 +118,7 @@ export default function Sidenav() {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <InboxIcon />
+                                <FactCheckIcon />
                             </ListItemIcon>
                             <ListItemText primary="Wishlist" sx={{ opacity: open ? 1 : 0 }} />
                         </ListItemButton>

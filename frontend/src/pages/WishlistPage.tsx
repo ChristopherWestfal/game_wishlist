@@ -1,5 +1,4 @@
 import {ApiGame} from "../types/GameTypes.ts";
-import "../styles/ShowGameCardPages.css"
 import GameCardWishlist from "../components/GameCardWishlist.tsx";
 import Box from "@mui/material/Box";
 import Sidenav from "../components/Sidenav.tsx";
@@ -16,32 +15,25 @@ type WishlistPageProps = {
 
 export default function WishlistPage(props: Readonly<WishlistPageProps>) {
 
+    const pageName = "Wishlist";
+
     return (
         <>
-            <Navbar/>
+            <Navbar pageName={pageName}/>
             <Box height={50}/>
             <Box sx={{ display: 'flex' }}>
                 <Sidenav/>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                     <Typography paragraph>
                         <Grid container spacing={2}>
-                            <Grid item xs={8}>
-
-                            </Grid>
-                            <Grid item xs={4}>
-
-                            </Grid>
-                        </Grid>
-
-                        <div className="gallery">
                             {
-                                props.games.map((game) => <GameCardWishlist
+                                props.games.map((game) => <Grid item xs={3}> <GameCardWishlist
                                     putGame={props.putGame}
                                     deleteById={props.deleteById}
                                     game={game}
-                                    key={game.id}/>)
+                                    key={game.id}/></Grid>)
                             }
-                        </div>
+                        </Grid>
                     </Typography>
                 </Box>
             </Box>

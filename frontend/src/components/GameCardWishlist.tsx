@@ -1,7 +1,11 @@
 import {ApiGame} from "../types/GameTypes.ts";
 import Modal from 'react-modal'
-import "../styles/GameCard.css"
+import "../styles/Modal.css"
 import {useState} from "react";
+import {Button, Card, CardActions, CardContent} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import React from "react";
+import Box from "@mui/material/Box";
 
 Modal.setAppElement('#root');
 
@@ -48,16 +52,32 @@ export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>)
         setIsShowNoteModalOpen(false);
     }
 
+    const card = (
+        <React.Fragment>
+            <CardContent>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    {props.game.name}
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    Release: {props.game.released}
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    Note: {note}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button variant="contained" onClick={handleAddNote}>Add/Edit Note</Button>
+                <Button variant="contained" onClick={handleShowNote}>Show Note</Button>
+                <Button variant="contained" onClick={handleDeleteById}>Delete from List</Button>
+            </CardActions>
+        </React.Fragment>
+    );
+
     return (
         <>
-            <article className="item-card">
-                <p>{props.game.name}</p>
-                <p>Released: {props.game.released}</p>
-                <p>{note}</p>
-                <button onClick={handleAddNote}>Add/Edit Note</button>
-                <button onClick={handleShowNote}>Show Note</button>
-                <button onClick={handleDeleteById}>Delete from List</button>
-            </article>
+            <Box sx={{ minWidth: 300 }}>
+                <Card sx={{ maxWidth: 100 + "%", height: 170 }}>{card}</Card>
+            </Box>
 
             <Modal
                 isOpen={isModalOpen}

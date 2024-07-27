@@ -67,7 +67,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function Navbar() {
+type NavbarProps = {
+    pageName:string
+}
+
+export default function Navbar(props:Readonly<NavbarProps>) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
@@ -188,7 +192,7 @@ export default function Navbar() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        MUI
+                        {props.pageName}
                     </Typography>
                     <Search>
                         <SearchIconWrapper>
