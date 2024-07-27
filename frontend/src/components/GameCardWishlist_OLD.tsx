@@ -2,16 +2,7 @@ import {ApiGame} from "../types/GameTypes.ts";
 import Modal from 'react-modal'
 import "../styles/Modal.css"
 import {useState} from "react";
-import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    Dialog, DialogActions,
-    DialogContent, DialogContentText,
-    DialogTitle,
-    TextField
-} from "@mui/material";
+import {Button, Card, CardActions, CardContent} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import Box from "@mui/material/Box";
@@ -25,16 +16,16 @@ type GameCardWishlistProps = {
 }
 
 export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isShowNoteModalOpen, setIsShowNoteModalOpen] = useState(false);
     const [note, setNote] = useState(props.game.note);
-    const[openEditNote, setOpenEditNote] = useState(false)
-    const[openShowNote, setOpenShowNote] = useState(false)
 
     function handleDeleteById() {
         props.deleteById(props.game.id);
     }
 
     function handleAddNote() {
-        setOpenEditNote(true);
+        setIsModalOpen(true);
         if (note === "")
             setNote("")
     }
@@ -43,22 +34,22 @@ export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>)
         if (note === "")
             setNote("Place for a Note")
         props.game.note = note;
-        setOpenEditNote(false);
+        setIsModalOpen(false);
         props.putGame(props.game.id, note);
     }
 
     function handleCloseModal() {
         if (note === "")
             setNote("Place for a Note")
-        setOpenEditNote(false);
+        setIsModalOpen(false);
     }
 
     function handleShowNote() {
-        setOpenShowNote(true);
+        setIsShowNoteModalOpen(true);
     }
 
     function handleCloseShowNoteModal() {
-        setOpenShowNote(false);
+        setIsShowNoteModalOpen(false);
     }
 
     const card = (
@@ -77,7 +68,7 @@ export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>)
             <CardActions>
                 <Button variant="contained" onClick={handleAddNote}>Add/Edit Note</Button>
                 <Button variant="contained" onClick={handleShowNote}>Show Note</Button>
-                <Button variant="contained" color="error" onClick={handleDeleteById}>Delete from List</Button>
+                <Button variant="contained" onClick={handleDeleteById}>Delete from List</Button>
             </CardActions>
         </React.Fragment>
     );
@@ -88,34 +79,34 @@ export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>)
                 <Card sx={{ maxWidth: 100 + "%", height: 170 }}>{card}</Card>
             </Box>
 
-            <Dialog open={openEditNote} fullWidth>
-                <DialogTitle>Add Note</DialogTitle>
-                <DialogContent>
-                    <TextField
-                        id="outlined-textarea"
-                        value={note}
-                        placeholder="Enter your note here..."
-                        multiline
-                        onChange={(e) => setNote(e.target.value)}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" color="success" onClick={handleSaveNote}>Save Note</Button>
-                    <Button variant="contained" color="error" onClick={handleCloseModal}>Cancel</Button>
-                </DialogActions>
-            </Dialog>
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={handleCloseModal}
+                contentLabel="Add Note Modal"
+                className="modal"
+                overlayClassName="overlay"
+            >
+                <h2>Add a Note</h2>
+                <textarea
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    placeholder="Enter your note here..."
+                />
+                <button onClick={handleSaveNote}>Save Note</button>
+                <button onClick={handleCloseModal}>Cancel</button>
+            </Modal>
 
-            <Dialog open={openShowNote} fullWidth>
-                <DialogTitle>Note</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        {note}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" color="error" onClick={handleCloseShowNoteModal}>Close</Button>
-                </DialogActions>
-            </Dialog>
+            <Modal
+                isOpen={isShowNoteModalOpen}
+                onRequestClose={handleCloseShowNoteModal}
+                contentLabel="Show Note Modal"
+                className="modal"
+                overlayClassName="overlay"
+            >
+                <h2>Note</h2>
+                <p>{note}</p>
+                <button onClick={handleCloseShowNoteModal}>Close</button>
+            </Modal>
         </>
     );
 }

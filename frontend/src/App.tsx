@@ -18,7 +18,6 @@ function App() {
             .then(response => {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
-                console.log(response.data.previous)
                 setApiGames(response.data.results);
             })
             .catch(error => console.error("No API available", error))
@@ -29,7 +28,6 @@ function App() {
             .then(response => {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
-                console.log(response.data.previous)
                 setApiGames(response.data.results);
             })
             .catch(error => console.error("No API available", error))
@@ -40,7 +38,6 @@ function App() {
             .then(response => {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
-                console.log(response.data.previous)
                 setApiGames(response.data.results);
             })
             .catch(error => console.error("No API available", error))
@@ -56,10 +53,6 @@ function App() {
 
     function deleteById(id:number){
         axios.delete(`/api/wishlist/${id}`)
-            .then(response => {
-                if(JSON.stringify(response.data !== null))
-                    alert("Game successfully deleted");
-            })
             .then(getAllWishedGames)
             .catch(error => console.error("No game with such ID in wishlist", error))
     }
@@ -79,10 +72,6 @@ function App() {
 
     function putGame(id:number, note:string){
         axios.put(`/api/wishlist?id=${id}&note=${note}`)
-            .then(response => {
-                if(JSON.stringify(response.data !== null))
-                    alert("Note successfully added");
-            })
             .then(getAllWishedGames)
             .catch(error => console.error("No game with such ID in wishlist", error))
     }
