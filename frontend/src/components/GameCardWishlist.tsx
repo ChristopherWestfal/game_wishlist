@@ -21,13 +21,14 @@ Modal.setAppElement('#root');
 type GameCardWishlistProps = {
     game: ApiGame,
     deleteById: (id: number) => void,
-    putGame:(id: number, note: string) => void
+    putGame:(id: number, note: string) => void,
 }
 
 export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>) {
     const [note, setNote] = useState(props.game.note);
-    const[openEditNote, setOpenEditNote] = useState(false)
-    const[openShowNote, setOpenShowNote] = useState(false)
+    const [openEditNote, setOpenEditNote] = useState(false);
+    const [openShowNote, setOpenShowNote] = useState(false);
+
 
     function handleDeleteById() {
         props.deleteById(props.game.id);
@@ -75,9 +76,9 @@ export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>)
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button variant="contained" onClick={handleAddNote}>Add/Edit Note</Button>
+                <Button variant="contained" onClick={handleAddNote}>Add Note</Button>
                 <Button variant="contained" onClick={handleShowNote}>Show Note</Button>
-                <Button variant="contained" color="error" onClick={handleDeleteById}>Delete from List</Button>
+                <Button variant="contained" color="error" onClick={handleDeleteById}>Discard from List</Button>
             </CardActions>
         </React.Fragment>
     );
@@ -85,7 +86,7 @@ export default function GameCardWishlist(props: Readonly<GameCardWishlistProps>)
     return (
         <>
             <Box sx={{ minWidth: 300 }}>
-                <Card sx={{ maxWidth: 100 + "%", height: 170 }}>{card}</Card>
+                <Card sx={{ maxWidth: 100 + "%" }}>{card}</Card>
             </Box>
 
             <Dialog open={openEditNote} fullWidth>

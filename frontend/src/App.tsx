@@ -13,6 +13,7 @@ function App() {
     const [next, setNext] = useState<string | null>(null)
     const [prev, setPrev] = useState<string | null>(null)
 
+
     function getAllApiGames() {
         axios.get("/api/apigames")
             .then(response => {
@@ -60,8 +61,9 @@ function App() {
     function postGame(game:ApiGame){
         axios.post("api/wishlist", game)
             .then(response => {
-                if(JSON.stringify(response.data !== null))
+                if(JSON.stringify(response.data !== null)) {
                     alert("Game successfully added");
+                }
             })
             .then(getAllWishedGames)
             .catch(error => {
