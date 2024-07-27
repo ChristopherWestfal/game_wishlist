@@ -28,13 +28,10 @@ export default function HomePage(props: Readonly<HomePageProps>) {
     return (
         <>
             <Navbar/>
+            <Box height={50}/>
             <Box sx={{ display: 'flex' }}>
                 <Sidenav/>
-
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                    <Typography paragraph>
-                        Gamelist
-                    </Typography>
                     <Typography paragraph>
                         <div className="gallery">
                             {

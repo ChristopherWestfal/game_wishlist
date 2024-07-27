@@ -18,13 +18,10 @@ export default function WishlistPage(props: Readonly<WishlistPageProps>) {
     return (
         <>
             <Navbar/>
+            <Box height={50}/>
             <Box sx={{ display: 'flex' }}>
                 <Sidenav/>
-
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                    <Typography paragraph>
-                        Wishlist
-                    </Typography>
                     <Typography paragraph>
                         <div className="gallery">
                             {
