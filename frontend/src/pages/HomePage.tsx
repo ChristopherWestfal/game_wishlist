@@ -36,7 +36,7 @@ export default function HomePage(props: Readonly<HomePageProps>) {
                 <Sidenav/>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                     <Typography paragraph>
-                        <Grid container spacing={2}>
+                        <Grid container spacing={1}>
                             {
                                 props.games.map((game) => <Grid item xs={3}> <GameCard game={game} key={game.id} postGame={props.postGame}/></Grid>)
                             }

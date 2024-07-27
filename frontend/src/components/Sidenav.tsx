@@ -25,6 +25,8 @@ const openedMixin = (theme: Theme): CSSObject => ({
         duration: theme.transitions.duration.enteringScreen,
     }),
     overflowX: 'hidden',
+    backgroundColor: '#101f33',
+    color: 'rgba(255, 255, 255, 0.7)',
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -37,6 +39,8 @@ const closedMixin = (theme: Theme): CSSObject => ({
     [theme.breakpoints.up('sm')]: {
         width: `calc(${theme.spacing(8)} + 1px)`,
     },
+    backgroundColor: '#101f33',
+    color: 'rgba(255, 255, 255, 0.7)',
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -96,11 +100,18 @@ export default function Sidenav() {
                                     minWidth: 0,
                                     mr: open ? 3 : 'auto',
                                     justifyContent: 'center',
+                                    color: 'rgba(255, 255, 255, 0.7)',
                                 }}
                             >
                                 <VideogameAssetIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Gamelist" sx={{ opacity: open ? 1 : 0 }}/>
+                            <ListItemText primary="Gamelist" sx={{
+                                opacity: open ? 1 : 0,
+                                '& span': {
+                                    fontWeight: '600',
+                                    fontSize: '16px'
+                                }
+                            }}/>
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate("/wishlist")}>
@@ -116,11 +127,18 @@ export default function Sidenav() {
                                     minWidth: 0,
                                     mr: open ? 3 : 'auto',
                                     justifyContent: 'center',
+                                    color: 'rgba(255, 255, 255, 0.7)',
                                 }}
                             >
                                 <FactCheckIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Wishlist" sx={{ opacity: open ? 1 : 0 }} />
+                            <ListItemText primary="Wishlist" sx={{
+                                opacity: open ? 1 : 0,
+                                '& span': {
+                                    fontWeight: '600',
+                                    fontSize: '16px'
+                                }
+                            }}/>
                         </ListItemButton>
                     </ListItem>
                 </List>

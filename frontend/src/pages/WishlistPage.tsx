@@ -25,7 +25,7 @@ export default function WishlistPage(props: Readonly<WishlistPageProps>) {
                 <Sidenav/>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                     <Typography paragraph>
-                        <Grid container spacing={2}>
+                        <Grid container spacing={1}>
                             {
                                 props.games.map((game) => <Grid item xs={3}> <GameCardWishlist
                                     putGame={props.putGame}
