@@ -120,12 +120,28 @@ function App() {
             .catch(error => console.error("No game with such ID in wishlist", error))
     }
 
+    function getSearchedWishedGames(searchedGame:string) {
+        axios.get("/api/wishlist/search", {
+            params: {
+                name: searchedGame
+            }
+        })
+            .then(response => {
+                setWishedGames(response.data);
+            })
+            .catch(error => console.error("No Database available", error))
+    }
+
     useEffect(() => {
-        if(searchQuery)
+        if(searchQuery) {
             getSearchedGames(searchQuery);
+            getSearchedWishedGames(searchQuery);
+        }
         else
+        {
             getAllApiGames();
-        getAllWishedGames()
+            getAllWishedGames();
+        }
     }, [searchQuery]);
 
     const router = createBrowserRouter([

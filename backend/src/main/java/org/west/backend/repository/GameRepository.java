@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface GameRepository extends MongoRepository<Game, Integer> {
 
-    @Query("{ 'title': { $regex: ?0, $options: 'i' } }")
+    @Query("{ 'name': { $regex: ?0, $options: 'i' } }")
     List<Game> findByName(String namePart);
 }

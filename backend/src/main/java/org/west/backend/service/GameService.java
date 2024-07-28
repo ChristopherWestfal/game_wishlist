@@ -40,7 +40,5 @@ public class GameService {
         return gameRepository.save(foundGame);
     }
 
-    public List<Game> getSearchedGames(String name) {
-        return gameRepository.findByName(name);
-    }
+    public List<Game> getSearchedGames(String name) { return gameRepository.findByName(name); }
 }
