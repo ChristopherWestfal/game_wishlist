@@ -15,9 +15,10 @@ function App() {
     const [next, setNext] = useState<string | null>(null)
     const [prev, setPrev] = useState<string | null>(null)
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
     const [severity, setSeverity] = useState<'success' | 'error' | 'warning' | 'info'>('success');
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState<string>('');
+    const [count, setCount] = useState<number>(0)
 
     const handleClick = (severity: 'success' | 'error' | 'warning' | 'info', message: string) => {
         setSeverity(severity);
@@ -42,6 +43,7 @@ function App() {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
                 setApiGames(response.data.results);
+                setCount(response.data.count);
             })
             .catch(error => console.error("No API available", error))
     }
@@ -111,7 +113,7 @@ function App() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <GamelistPage games={apiGames} postGame={postGame} next={next} prev={prev} getAllApiGamesNext={getAllApiGamesNext} getAllApiGamesPrev={getAllApiGamesPrev}/>
+            element: <GamelistPage games={apiGames} postGame={postGame} next={next} prev={prev} getAllApiGamesNext={getAllApiGamesNext} getAllApiGamesPrev={getAllApiGamesPrev} count={count}/>
         },
         {
             path: "/wishlist",

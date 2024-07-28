@@ -6,12 +6,14 @@ import Typography from "@mui/material/Typography";
 import Navbar from "../components/Navbar.tsx";
 import Grid from '@mui/material/Grid';
 import {Button} from "@mui/material";
+import {useState} from "react";
 
 type GamelistProps = {
     games: ApiGame[],
     postGame: (game: ApiGame) => void,
     next: string|null,
-    prev:string|null,
+    prev: string|null,
+    count: number,
     getAllApiGamesNext: () => void,
     getAllApiGamesPrev: () => void,
 }
@@ -19,12 +21,15 @@ type GamelistProps = {
 export default function GamelistPage(props: Readonly<GamelistProps>) {
 
     const pageName = "Gamelist";
+    const [pageNumber, setPageNumber] = useState<number>(1);
 
     function handleNext(){
+        setPageNumber(prevPageNumber => prevPageNumber + 1);
         props.getAllApiGamesNext();
     }
 
     function handlePrev(){
+        setPageNumber(prevPageNumber => prevPageNumber - 1);
         props.getAllApiGamesPrev();
     }
 
@@ -50,10 +55,22 @@ export default function GamelistPage(props: Readonly<GamelistProps>) {
                                         Previous
                                     </Button>
                                     <Box sx={{marginTop: '5px'}}>
-                                        <span>Seitenzahl</span>
+                                        <Button
+                                            variant="outlined"
+                                            sx={{
+                                                color: '#1565c0',
+                                                borderColor: '#1565c0',
+                                                cursor: 'default',
+                                                '&:hover': {
+                                                    borderColor: '#1565c0'
+                                                }
+                                            }}
+                                        >
+                                            [ {pageNumber} / {Math.ceil(props.count / 20)} ]
+                                        </Button>
                                     </Box>
                                     <Button variant="contained" onClick={handleNext} disabled={props.next === ""}>
-                                        Next
+                                    Next
                                     </Button>
                                 </Box>
                             </Grid>

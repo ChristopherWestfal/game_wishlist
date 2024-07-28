@@ -35,7 +35,7 @@ class ApiControllerTest {
                 new ApiGame(1, "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", 4.5, 5)
         );
 
-        apiResponse = new ApiResponse(gameTestData, "", "");
+        apiResponse = new ApiResponse(gameTestData, "", "", 1);
     }
 
     @Test
