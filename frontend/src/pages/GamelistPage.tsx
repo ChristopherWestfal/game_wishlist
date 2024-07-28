@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar.tsx";
 import Grid from '@mui/material/Grid';
 import {Button} from "@mui/material";
 import {useState} from "react";
+import {useAppStore} from "../AppStore.tsx";
 
 type GamelistProps = {
     games: ApiGame[],
@@ -22,21 +23,29 @@ export default function GamelistPage(props: Readonly<GamelistProps>) {
 
     const pageName = "Gamelist";
     const [pageNumber, setPageNumber] = useState<number>(1);
+    const updateOpen = useAppStore((state) => state.updateOpen);
+    const dopen = useAppStore((state) => state.dopen);
 
     function handleNext(){
         setPageNumber(prevPageNumber => prevPageNumber + 1);
         props.getAllApiGamesNext();
+        if (dopen) {
+            updateOpen(false); // Close the sidenav
+        }
     }
 
     function handlePrev(){
         setPageNumber(prevPageNumber => prevPageNumber - 1);
         props.getAllApiGamesPrev();
+        if (dopen) {
+            updateOpen(false); // Close the sidenav
+        }
     }
 
     return (
         <>
+            <Box height={47}/>
             <Navbar pageName={pageName}/>
-            <Box height={50}/>
             <Box sx={{ display: 'flex' }}>
                 <Sidenav/>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
@@ -70,7 +79,7 @@ export default function GamelistPage(props: Readonly<GamelistProps>) {
                                         </Button>
                                     </Box>
                                     <Button variant="contained" onClick={handleNext} disabled={props.next === ""}>
-                                    Next
+                                        Next
                                     </Button>
                                 </Box>
                             </Grid>
