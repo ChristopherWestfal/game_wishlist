@@ -19,8 +19,8 @@ export default function WishlistPage(props: Readonly<WishlistPageProps>) {
 
     return (
         <>
-            <Navbar pageName={pageName}/>
             <Box height={50}/>
+            <Navbar pageName={pageName}/>
             <Box sx={{ display: 'flex' }}>
                 <Sidenav/>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

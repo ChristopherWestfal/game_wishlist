@@ -1,5 +1,5 @@
-import create from "zustand";
-import { persist } from "zustand/middleware"; // ermöglicht den Zustand im lokalen Speicher (localStorage) zu speichern.
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware"; // ermöglicht den Zustand im lokalen Speicher (localStorage) zu speichern.
 
 // Definition des Zustands
 // - appStore ist eine Funktion, die ein Objekt zurückgibt. Dieses Objekt enthält den initialen Zustand (dopen: true)
@@ -19,7 +19,7 @@ const appStore = (set:any) => ({
 const useAppStore = create(
     persist(appStore, {
         name: "my_app_store", // Name des Schlüssels im lokalen Speicher
-        getStorage: () => localStorage, // Optional: explizite Angabe von localStorage
+        storage: createJSONStorage(() => localStorage), // Optional: explizite Angabe von localStorage
     })
 );
 

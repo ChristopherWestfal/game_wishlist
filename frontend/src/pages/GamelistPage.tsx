@@ -6,39 +6,57 @@ import Typography from "@mui/material/Typography";
 import Navbar from "../components/Navbar.tsx";
 import Grid from '@mui/material/Grid';
 import {Button} from "@mui/material";
+import {useState} from "react";
+import {useAppStore} from "../AppStore.tsx";
 
-type HomePageProps = {
+type GamelistProps = {
     games: ApiGame[],
     postGame: (game: ApiGame) => void,
     next: string|null,
-    prev:string|null,
+    prev: string|null,
+    count: number,
     getAllApiGamesNext: () => void,
     getAllApiGamesPrev: () => void,
 }
 
-export default function GamelistPage(props: Readonly<HomePageProps>) {
+export default function GamelistPage(props: Readonly<GamelistProps>) {
 
     const pageName = "Gamelist";
+    const [pageNumber, setPageNumber] = useState<number>(1);
+    const updateOpen = useAppStore((state) => state.updateOpen);
+    const dopen = useAppStore((state) => state.dopen);
 
     function handleNext(){
+        setPageNumber(prevPageNumber => prevPageNumber + 1);
         props.getAllApiGamesNext();
+        if (dopen) {
+            updateOpen(false); // Close the sidenav
+        }
     }
 
     function handlePrev(){
+        setPageNumber(prevPageNumber => prevPageNumber - 1);
         props.getAllApiGamesPrev();
+        if (dopen) {
+            updateOpen(false); // Close the sidenav
+        }
     }
 
     return (
         <>
-            <Navbar pageName={pageName}/>
             <Box height={50}/>
+            <Navbar pageName={pageName}/>
             <Box sx={{ display: 'flex' }}>
                 <Sidenav/>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                    <Typography paragraph>
+                    <Typography component="div" paragraph>
                         <Grid container spacing={1}>
                             {
-                                props.games.map((game) => <Grid item xs={3}> <GameCard game={game} key={game.id} postGame={props.postGame}/></Grid>)
+                                props.games.map((game) => (
+                                    <Grid item xs={3} key={game.id}> {/* Set the key here */}
+                                        <GameCard game={game} postGame={props.postGame} />
+                                    </Grid>
+                                ))
                             }
                             <Grid item xs={12}>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -46,7 +64,19 @@ export default function GamelistPage(props: Readonly<HomePageProps>) {
                                         Previous
                                     </Button>
                                     <Box sx={{marginTop: '5px'}}>
-                                        <span>Seitenzahl</span>
+                                        <Button
+                                            variant="outlined"
+                                            sx={{
+                                                color: '#1565c0',
+                                                borderColor: '#1565c0',
+                                                cursor: 'default',
+                                                '&:hover': {
+                                                    borderColor: '#1565c0'
+                                                }
+                                            }}
+                                        >
+                                            [ {pageNumber} / {Math.ceil(props.count / 20)} ]
+                                        </Button>
                                     </Box>
                                     <Button variant="contained" onClick={handleNext} disabled={props.next === ""}>
                                         Next

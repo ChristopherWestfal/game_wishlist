@@ -13,4 +13,5 @@ public class ApiResponse {
     private List<ApiGame> results;
     private String next;
     private String previous;
+    private int count;
 }
