@@ -68,7 +68,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 type NavbarProps = {
-    pageName:string
+    pageName:string,
+    getSearchedGames: (searchedGame: string) => void,
+    setPageNumber: (number:number) => void,
 }
 
 export default function Navbar(props:Readonly<NavbarProps>) {
@@ -80,6 +82,14 @@ export default function Navbar(props:Readonly<NavbarProps>) {
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const [searchQuery, setSearchQuery] = React.useState<string>(''); // Local state for search input
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
+        props.getSearchedGames(event.target.value); // Call getSearchedGames with the input value
+        props.setPageNumber(1)
+    };
 
     const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -199,8 +209,10 @@ export default function Navbar(props:Readonly<NavbarProps>) {
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            placeholder="Search…"
+                            placeholder="Search by name…"
                             inputProps={{ 'aria-label': 'search' }}
+                            value={searchQuery}
+                            onChange={handleSearchChange}
                         />
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />

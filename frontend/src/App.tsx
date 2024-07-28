@@ -35,8 +35,6 @@ function App() {
     };
 
 
-
-
     function getAllApiGames() {
         axios.get("/api/apigames")
             .then(response => {
@@ -64,6 +62,21 @@ function App() {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
                 setApiGames(response.data.results);
+            })
+            .catch(error => console.error("No API available", error))
+    }
+
+    function getSearchedGames(searchedGame:string) {
+        axios.get("/api/apigames/search", {
+            params: {
+                search: searchedGame,
+            }
+        })
+            .then(response => {
+                setNext(response.data.next);
+                setPrev(response.data.previous);
+                setApiGames(response.data.results);
+                setCount(response.data.count);
             })
             .catch(error => console.error("No API available", error))
     }
@@ -113,7 +126,7 @@ function App() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <GamelistPage games={apiGames} postGame={postGame} next={next} prev={prev} getAllApiGamesNext={getAllApiGamesNext} getAllApiGamesPrev={getAllApiGamesPrev} count={count}/>
+            element: <GamelistPage games={apiGames} postGame={postGame} next={next} prev={prev} getAllApiGamesNext={getAllApiGamesNext} getAllApiGamesPrev={getAllApiGamesPrev} count={count} getSearchedGames={getSearchedGames}/>
         },
         {
             path: "/wishlist",

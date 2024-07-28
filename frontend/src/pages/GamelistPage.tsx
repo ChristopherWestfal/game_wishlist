@@ -17,6 +17,7 @@ type GamelistProps = {
     count: number,
     getAllApiGamesNext: () => void,
     getAllApiGamesPrev: () => void,
+    getSearchedGames: (searchedGame: string) => void,
 }
 
 export default function GamelistPage(props: Readonly<GamelistProps>) {
@@ -45,7 +46,7 @@ export default function GamelistPage(props: Readonly<GamelistProps>) {
     return (
         <>
             <Box height={50}/>
-            <Navbar pageName={pageName}/>
+            <Navbar pageName={pageName} getSearchedGames={props.getSearchedGames} setPageNumber={setPageNumber}/>
             <Box sx={{ display: 'flex' }}>
                 <Sidenav/>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
