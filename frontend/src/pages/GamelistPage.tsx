@@ -44,7 +44,7 @@ export default function GamelistPage(props: Readonly<GamelistProps>) {
 
     return (
         <>
-            <Box height={47}/>
+            <Box height={50}/>
             <Navbar pageName={pageName}/>
             <Box sx={{ display: 'flex' }}>
                 <Sidenav/>
