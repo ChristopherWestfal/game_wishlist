@@ -69,8 +69,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 type NavbarProps = {
     pageName:string,
-    getSearchedGames: (searchedGame: string) => void,
-    setPageNumber: (number:number) => void,
 }
 
 export default function Navbar(props:Readonly<NavbarProps>) {
@@ -84,11 +82,14 @@ export default function Navbar(props:Readonly<NavbarProps>) {
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const [searchQuery, setSearchQuery] = React.useState<string>(''); // Local state for search input
+    const globalSetSearchQuery = useAppStore((state) => state.setSearchQuery);
+    const globalSetPageNumber = useAppStore((state) => state.setPageNumber);
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(event.target.value);
-        props.getSearchedGames(event.target.value); // Call getSearchedGames with the input value
-        props.setPageNumber(1)
+        const newQuery = event.target.value;
+        setSearchQuery(newQuery);
+        globalSetSearchQuery(newQuery);
+        globalSetPageNumber(1);
     };
 
     const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {

@@ -7,6 +7,7 @@ import {ApiGame} from "./types/GameTypes.ts";
 import WishlistPage from "./pages/WishlistPage.tsx";
 import {Alert, Snackbar} from '@mui/material';
 import Box from "@mui/material/Box";
+import {useAppStore} from "./AppStore.tsx";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
     const [severity, setSeverity] = useState<'success' | 'error' | 'warning' | 'info'>('success');
     const [message, setMessage] = useState<string>('');
     const [count, setCount] = useState<number>(0)
+    const searchQuery = useAppStore((state) => state.searchQuery);
 
     const handleClick = (severity: 'success' | 'error' | 'warning' | 'info', message: string) => {
         setSeverity(severity);
@@ -119,14 +121,17 @@ function App() {
     }
 
     useEffect(() => {
-        getAllApiGames();
+        if(searchQuery)
+            getSearchedGames(searchQuery);
+        else
+            getAllApiGames();
         getAllWishedGames()
-    }, []);
+    }, [searchQuery]);
 
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <GamelistPage games={apiGames} postGame={postGame} next={next} prev={prev} getAllApiGamesNext={getAllApiGamesNext} getAllApiGamesPrev={getAllApiGamesPrev} count={count} getSearchedGames={getSearchedGames}/>
+            element: <GamelistPage games={apiGames} postGame={postGame} next={next} prev={prev} getAllApiGamesNext={getAllApiGamesNext} getAllApiGamesPrev={getAllApiGamesPrev} count={count}/>
         },
         {
             path: "/wishlist",
