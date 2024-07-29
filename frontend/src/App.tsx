@@ -1,10 +1,13 @@
 import './App.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import HomePage from "./pages/HomePage.tsx";
+import GamelistPage from "./pages/GamelistPage.tsx";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {SyntheticEvent, useEffect, useState} from "react";
 import {ApiGame} from "./types/GameTypes.ts";
 import WishlistPage from "./pages/WishlistPage.tsx";
+import {Alert, Snackbar} from '@mui/material';
+import Box from "@mui/material/Box";
+import {useAppStore} from "./AppStore.tsx";
 
 function App() {
 
@@ -13,13 +16,36 @@ function App() {
     const [next, setNext] = useState<string | null>(null)
     const [prev, setPrev] = useState<string | null>(null)
 
+    const [open, setOpen] = useState<boolean>(false);
+    const [severity, setSeverity] = useState<'success' | 'error' | 'warning' | 'info'>('success');
+    const [message, setMessage] = useState<string>('');
+    const [count, setCount] = useState<number>(0)
+    const searchQuery = useAppStore((state) => state.searchQuery);
+    const globalSetPageNumber = useAppStore((state) => state.setPageNumber);
+
+    const handleClick = (severity: 'success' | 'error' | 'warning' | 'info', message: string) => {
+        setSeverity(severity);
+        setMessage(message);
+        setOpen(true);
+    };
+
+    const handleClose = (_event?: SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+
     function getAllApiGames() {
         axios.get("/api/apigames")
             .then(response => {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
-                console.log(response.data.previous)
                 setApiGames(response.data.results);
+                setCount(response.data.count);
+                globalSetPageNumber(1);
             })
             .catch(error => console.error("No API available", error))
     }
@@ -29,7 +55,6 @@ function App() {
             .then(response => {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
-                console.log(response.data.previous)
                 setApiGames(response.data.results);
             })
             .catch(error => console.error("No API available", error))
@@ -40,8 +65,22 @@ function App() {
             .then(response => {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
-                console.log(response.data.previous)
                 setApiGames(response.data.results);
+            })
+            .catch(error => console.error("No API available", error))
+    }
+
+    function getSearchedGames(searchedGame:string) {
+        axios.get("/api/apigames/search", {
+            params: {
+                search: searchedGame,
+            }
+        })
+            .then(response => {
+                setNext(response.data.next);
+                setPrev(response.data.previous);
+                setApiGames(response.data.results);
+                setCount(response.data.count);
             })
             .catch(error => console.error("No API available", error))
     }
@@ -56,46 +95,61 @@ function App() {
 
     function deleteById(id:number){
         axios.delete(`/api/wishlist/${id}`)
-            .then(response => {
-                if(JSON.stringify(response.data !== null))
-                    alert("Game successfully deleted");
+            .then(() => {
+                getAllWishedGames();
+                handleClick('success', "Game successfully discarded");
             })
-            .then(getAllWishedGames)
             .catch(error => console.error("No game with such ID in wishlist", error))
     }
 
     function postGame(game:ApiGame){
         axios.post("api/wishlist", game)
             .then(response => {
-                if(JSON.stringify(response.data !== null))
-                    alert("Game successfully added");
+                if(JSON.stringify(response.data !== null)) {
+                    handleClick('success', "Game successfully added");
+                }
             })
             .then(getAllWishedGames)
             .catch(error => {
-                alert("Game already added");
+                handleClick('warning', "Game already added");
                 console.error("Game already added", error)
             })
     }
 
     function putGame(id:number, note:string){
         axios.put(`/api/wishlist?id=${id}&note=${note}`)
-            .then(response => {
-                if(JSON.stringify(response.data !== null))
-                    alert("Note successfully added");
-            })
             .then(getAllWishedGames)
             .catch(error => console.error("No game with such ID in wishlist", error))
     }
 
+    function getSearchedWishedGames(searchedGame:string) {
+        axios.get("/api/wishlist/search", {
+            params: {
+                name: searchedGame
+            }
+        })
+            .then(response => {
+                setWishedGames(response.data);
+            })
+            .catch(error => console.error("No Database available", error))
+    }
+
     useEffect(() => {
-        getAllApiGames();
-        getAllWishedGames()
-    }, []);
+        if(searchQuery) {
+            getSearchedGames(searchQuery);
+            getSearchedWishedGames(searchQuery);
+        }
+        else
+        {
+            getAllApiGames();
+            getAllWishedGames();
+        }
+    }, [searchQuery]);
 
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <HomePage games={apiGames} postGame={postGame} next={next} prev={prev} getAllApiGamesNext={getAllApiGamesNext} getAllApiGamesPrev={getAllApiGamesPrev}/>
+            element: <GamelistPage games={apiGames} postGame={postGame} next={next} prev={prev} getAllApiGamesNext={getAllApiGamesNext} getAllApiGamesPrev={getAllApiGamesPrev} count={count}/>
         },
         {
             path: "/wishlist",
@@ -107,6 +161,22 @@ function App() {
     return (
         <>
             <RouterProvider router={router}/>
+
+            <Box sx={{ width: 500 }}>
+                <Snackbar
+                    open={open}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                >
+                    <Alert
+                        severity={severity}
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        {message}
+                    </Alert>
+                </Snackbar>
+            </Box>
         </>
     )
 }

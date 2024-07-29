@@ -1,5 +1,8 @@
 import {ApiGame} from "../types/GameTypes.ts";
-import "../styles/GameCard.css"
+import {Button, Card, CardActions, CardContent} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import React from "react";
+import Box from "@mui/material/Box";
 
 type GameCardProps = {
     game:ApiGame
@@ -13,14 +16,25 @@ export default function GameCard(props: Readonly<GameCardProps>) {
         props.postGame(props.game);
     }
 
+    const card = (
+        <React.Fragment>
+            <CardContent>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    {props.game.name}
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    Release: {props.game.released}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button variant="contained" onClick={handleFav}>Add to List</Button>
+            </CardActions>
+        </React.Fragment>
+    );
+
     return (
-        <>
-            <article className="item-card">
-                <p>{props.game.name}</p>
-                <p>{props.game.released}</p>
-                <p>Rating: {props.game.rating} / {props.game.rating_top}</p>
-                <button onClick={handleFav}>Add to List</button>
-            </article>
-        </>
+        <Box sx={{ minWidth: 300 }}>
+            <Card sx={{ maxWidth: 100 + "%" }}>{card}</Card>
+        </Box>
     );
 }
