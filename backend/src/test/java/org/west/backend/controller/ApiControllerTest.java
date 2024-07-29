@@ -15,6 +15,7 @@ import org.west.backend.service.GameApiService;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -35,7 +36,7 @@ class ApiControllerTest {
                 new ApiGame(1, "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", 4.5, 5)
         );
 
-        apiResponse = new ApiResponse(gameTestData, "", "");
+        apiResponse = new ApiResponse(gameTestData, "", "", 1);
     }
 
     @Test
@@ -97,4 +98,26 @@ class ApiControllerTest {
                                                                 previous: ""}
                                                                 """));
     }
+
+    @Test
+    void getSearchedGames() throws Exception {
+        when(gameApiService.getSearchedGames(anyString())).thenReturn(apiResponse);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/apigames/search")
+                .param("search", "Zelda"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                {"results": [{
+                                                                    id: 1,
+                                                                    name: "The Legend of Zelda: Breath of the Wild",
+                                                                    released: "2017-03-03",
+                                                                    background_image: "",
+                                                                    rating: 4.5,
+                                                                    rating_top: 5
+                                                                }],
+                                                                next: "",
+                                                                previous: ""}
+                                                                """));
+    }
+
 }

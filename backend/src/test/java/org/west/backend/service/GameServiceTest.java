@@ -104,4 +104,32 @@ class GameServiceTest {
         assertEquals(expected, actual);
         verify(mockGameRepository).save(expected);
     }
+
+    @Test
+    void getSearchedGames_shouldReturnListOfAllGamesWithName_whenCalledWithName() {
+        // GIVEN
+        List<Game> expected = List.of(new Game[]{new Game(1, "The Legend of Zelda: Breath of the Wild", "2017-03-03", "", true)});
+        when(mockGameRepository.findByName("Zelda")).thenReturn(expected);
+
+        // WHEN
+        List<Game> actual = gameService.getSearchedGames("Zelda");
+
+        // THEN
+        assertEquals(expected,actual);
+        verify(mockGameRepository).findByName("Zelda");
+    }
+
+    @Test
+    void getSearchedGames_shouldReturnEmptyList_whenCalledWithNameThatDoesNotExist() {
+        // GIVEN
+        List<Game> expected = List.of();
+        when(mockGameRepository.findByName("Zelda")).thenReturn(expected);
+
+        // WHEN
+        List<Game> actual = gameService.getSearchedGames("Hans");
+
+        // THEN
+        assertEquals(expected,actual);
+        verify(mockGameRepository).findByName("Hans");
+    }
 }

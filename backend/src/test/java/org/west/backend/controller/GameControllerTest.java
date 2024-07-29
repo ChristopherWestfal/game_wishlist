@@ -110,4 +110,23 @@ class GameControllerTest {
                             }
                         """));
     }
+
+    @Test
+    void getSearchedGames() throws Exception {
+        when(mockGameRepository.findByName("Zelda")).thenReturn(gameTestData);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/wishlist/search")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("name", "Zelda"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                            [{
+                               "id": 1,
+                               "name": "The Legend of Zelda: Breath of the Wild",
+                               "released": "2017-03-03",
+                               "note": "",
+                               "fav": true
+                            }]
+                        """));
+    }
 }

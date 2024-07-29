@@ -39,4 +39,10 @@ public class GameController {
     public Game putGame(@RequestParam int id, @RequestParam String note) throws InvalidIdException {
         return gameService.putGame(id, note);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/wishlist/search")
+    public List<Game> getSearchedGames(@RequestParam String name) {
+        return gameService.getSearchedGames(name);
+    }
 }

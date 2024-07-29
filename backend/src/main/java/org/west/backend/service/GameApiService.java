@@ -18,6 +18,11 @@ public class GameApiService {
     private String nextUrl = "";
     private String prevUrl = baseUrl;
 
+    @Value("${app.game.api}")
+    private String searchUrl;
+
+
+
 
     public GameApiService(){
         restClient = RestClient.builder()
@@ -94,5 +99,32 @@ public class GameApiService {
             response.setNext("");
 
         return response;
+    }
+
+    public ApiResponse getSearchedGames(String search) {
+        searchUrl = searchUrl + "&search=" + search;
+
+        ApiResponse response = restClient.get()
+                .uri(searchUrl)
+                .retrieve()
+                .body(ApiResponse.class);
+
+        if(response.getPrevious() != null) {
+            prevUrl = response.getPrevious();
+            response.setPrevious("1");
+        }
+        else
+            response.setPrevious("");
+
+        if(response.getNext() != null) {
+            nextUrl = response.getNext();
+            response.setNext("1");
+        }
+        else
+            response.setNext("");
+
+
+        return response;
+
     }
 }
