@@ -32,14 +32,17 @@ export default function GamelistPage(props: Readonly<GamelistProps>) {
         if (dopen) {
             updateOpen(false); // Close the sidenav
         }
+        console.log(pageNumber);
     }
 
     function handlePrev(){
-        globalSetPageNumber(pageNumber - 1);
+        if(pageNumber > 1)
+            globalSetPageNumber(pageNumber - 1);
         props.getAllApiGamesPrev();
         if (dopen) {
             updateOpen(false); // Close the sidenav
         }
+        console.log(pageNumber);
     }
 
     return (

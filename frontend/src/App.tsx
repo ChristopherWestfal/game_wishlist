@@ -21,6 +21,7 @@ function App() {
     const [message, setMessage] = useState<string>('');
     const [count, setCount] = useState<number>(0)
     const searchQuery = useAppStore((state) => state.searchQuery);
+    const globalSetPageNumber = useAppStore((state) => state.setPageNumber);
 
     const handleClick = (severity: 'success' | 'error' | 'warning' | 'info', message: string) => {
         setSeverity(severity);
@@ -44,6 +45,7 @@ function App() {
                 setPrev(response.data.previous);
                 setApiGames(response.data.results);
                 setCount(response.data.count);
+                globalSetPageNumber(1);
             })
             .catch(error => console.error("No API available", error))
     }
