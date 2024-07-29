@@ -1,6 +1,4 @@
 import {ApiGame} from "../types/GameTypes.ts";
-import Modal from 'react-modal'
-import "../styles/Modal.css"
 import {useState} from "react";
 import {
     Button,
@@ -16,7 +14,6 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import Box from "@mui/material/Box";
 
-Modal.setAppElement('#root');
 
 type GameCardWishlistProps = {
     game: ApiGame,

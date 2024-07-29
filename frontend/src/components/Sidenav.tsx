@@ -74,6 +74,7 @@ export default function Sidenav() {
     // const [open, setOpen] = React.useState(true);
     const navigate = useNavigate();
     const open = useAppStore((state) => state.dopen);
+    const globalSetSearchQuery = useAppStore((state) => state.setSearchQuery);
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -87,7 +88,9 @@ export default function Sidenav() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate("/")}>
+                    <ListItem disablePadding sx={{ display: 'block' }} onClick={() => {
+                        navigate("/")
+                        globalSetSearchQuery("")}}>
                         <ListItemButton
                             sx={{
                                 minHeight: 48,
@@ -114,7 +117,9 @@ export default function Sidenav() {
                             }}/>
                         </ListItemButton>
                     </ListItem>
-                    <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate("/wishlist")}>
+                    <ListItem disablePadding sx={{ display: 'block' }} onClick={() => {
+                        navigate("/wishlist")
+                        globalSetSearchQuery("")}}>
                         <ListItemButton
                             sx={{
                                 minHeight: 48,

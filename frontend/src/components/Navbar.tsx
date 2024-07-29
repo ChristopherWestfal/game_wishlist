@@ -6,14 +6,11 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {useAppStore} from "../AppStore.tsx";
 
@@ -69,8 +66,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 type NavbarProps = {
     pageName:string,
-    getSearchedGames: (searchedGame: string) => void,
-    setPageNumber: (number:number) => void,
 }
 
 export default function Navbar(props:Readonly<NavbarProps>) {
@@ -84,11 +79,14 @@ export default function Navbar(props:Readonly<NavbarProps>) {
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const [searchQuery, setSearchQuery] = React.useState<string>(''); // Local state for search input
+    const globalSetSearchQuery = useAppStore((state) => state.setSearchQuery);
+    const globalSetPageNumber = useAppStore((state) => state.setPageNumber);
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(event.target.value);
-        props.getSearchedGames(event.target.value); // Call getSearchedGames with the input value
-        props.setPageNumber(1)
+        const newQuery = event.target.value;
+        setSearchQuery(newQuery);
+        globalSetSearchQuery(newQuery);
+        globalSetPageNumber(1);
     };
 
     const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -125,8 +123,7 @@ export default function Navbar(props:Readonly<NavbarProps>) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Login</MenuItem>
         </Menu>
     );
 
@@ -147,26 +144,6 @@ export default function Navbar(props:Readonly<NavbarProps>) {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
                     size="large"
@@ -217,20 +194,6 @@ export default function Navbar(props:Readonly<NavbarProps>) {
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="error">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
                         <IconButton
                             size="large"
                             edge="end"

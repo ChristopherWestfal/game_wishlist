@@ -5,9 +5,13 @@ import { persist, createJSONStorage } from "zustand/middleware"; // ermöglicht 
 // - appStore ist eine Funktion, die ein Objekt zurückgibt. Dieses Objekt enthält den initialen Zustand (dopen: true)
 //      und eine Methode (updateOpen), um den Zustand zu aktualisieren.
 // - set ist eine Funktion, die von Zustand bereitgestellt wird und verwendet wird, um den Zustand zu ändern.
-const appStore = (set:any) => ({
+const appStore = (set: any) => ({
     dopen: true,
-    updateOpen: (dopen:boolean) => set({ dopen }) // Update-Funktion
+    searchQuery: '', // Initiale Suchanfrage
+    pageNumber: 1, // Initiale Seitenzahl
+    updateOpen: (dopen: boolean) => set({ dopen }), // Update-Funktion für dopen
+    setSearchQuery: (query: string) => set({ searchQuery: query }), // Funktion zur Aktualisierung der Suchanfrage
+    setPageNumber: (number: number) => set({ pageNumber: number }), // Funktion zur Aktualisierung der Seitenzahl
 });
 
 // Persistieren des Zustands mit lokalem Speicher
