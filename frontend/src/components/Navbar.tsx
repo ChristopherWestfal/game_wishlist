@@ -11,7 +11,6 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import { useAppStore } from "../AppStore.tsx";
 import { useNavigate } from "react-router-dom";
 
@@ -69,12 +68,8 @@ type NavbarProps = {
 }
 
 export default function Navbar(props: Readonly<NavbarProps>) {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMenuAnchorEl, setMobileMenuAnchorEl] = React.useState<null | HTMLElement>(null);
 
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const isMobileMenuOpenMobile = Boolean(mobileMenuAnchorEl);
 
     const dopen = useAppStore((state) => state.dopen);
@@ -95,17 +90,15 @@ export default function Navbar(props: Readonly<NavbarProps>) {
         globalSetPageNumber(1);
     };
 
-    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
+    const handleProfileMenuOpen = () => {
+        navigate('/login'); // Redirect to Login page
     };
 
     const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
         setMobileMenuAnchorEl(null);
     };
 
     const handleMenuClose = () => {
-        setAnchorEl(null);
         handleMobileMenuClose();
     };
 
@@ -132,7 +125,7 @@ export default function Navbar(props: Readonly<NavbarProps>) {
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
-            anchorEl={anchorEl}
+            anchorEl={null} // Remove unused anchorEl
             anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
@@ -143,43 +136,11 @@ export default function Navbar(props: Readonly<NavbarProps>) {
                 vertical: 'top',
                 horizontal: 'right',
             }}
-            open={isMenuOpen}
+            open={false} // Remove unused state
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-        </Menu>
-    );
-
-    const mobileMenuId = 'mobile-menu';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
         </Menu>
     );
 
@@ -253,6 +214,7 @@ export default function Navbar(props: Readonly<NavbarProps>) {
                         />
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />
+                    {/* Profile Icon for desktop */}
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
                             size="large"
@@ -266,25 +228,24 @@ export default function Navbar(props: Readonly<NavbarProps>) {
                             <AccountCircle />
                         </IconButton>
                     </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                    {/* Profile Icon for mobile */}
+                    <Box sx={{ display: { xs: 'flex', sm: 'none' }, ml: 'auto' }}>
                         <IconButton
                             size="large"
-                            aria-label="show more"
-                            aria-controls={mobileMenuIdMobile}
+                            edge="end"
+                            aria-label="account of current user"
+                            aria-controls={menuId}
                             aria-haspopup="true"
-                            onClick={handleMobileMenuOpenMobile}
+                            onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <MoreIcon />
+                            <AccountCircle />
                         </IconButton>
                     </Box>
                 </Toolbar>
             </AppBar>
-            {renderMobileMenu}
             {renderMobileMenuMobile}
             {renderMenu}
         </Box>
     );
 }
-
-
