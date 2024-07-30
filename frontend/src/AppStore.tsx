@@ -9,9 +9,11 @@ const appStore = (set: any) => ({
     dopen: true,
     searchQuery: '', // Initiale Suchanfrage
     pageNumber: 1, // Initiale Seitenzahl
+    mobileOpen: false, // Zustand für das mobile Öffnen der Sidebar
     updateOpen: (dopen: boolean) => set({ dopen }), // Update-Funktion für dopen
     setSearchQuery: (query: string) => set({ searchQuery: query }), // Funktion zur Aktualisierung der Suchanfrage
     setPageNumber: (number: number) => set({ pageNumber: number }), // Funktion zur Aktualisierung der Seitenzahl
+    setMobileOpen: (mobileOpen: boolean) => set({ mobileOpen }),
 });
 
 // Persistieren des Zustands mit lokalem Speicher
