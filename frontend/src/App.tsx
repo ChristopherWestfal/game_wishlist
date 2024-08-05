@@ -8,6 +8,7 @@ import WishlistPage from "./pages/WishlistPage.tsx";
 import {Alert, Snackbar} from '@mui/material';
 import Box from "@mui/material/Box";
 import {useAppStore} from "./AppStore.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
 
 function App() {
 
@@ -154,6 +155,11 @@ function App() {
         {
             path: "/wishlist",
             element: <WishlistPage games={wishedGames} deleteById={deleteById} putGame={putGame}/>
+        },
+
+        {
+            path: "/login",
+            element: <LoginPage />
         },
 
     ])

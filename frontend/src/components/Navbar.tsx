@@ -91,16 +91,13 @@ export default function Navbar(props: Readonly<NavbarProps>) {
     };
 
     const handleProfileMenuOpen = () => {
-        navigate('/login'); // Redirect to Login page
+        navigate('/login');
     };
 
     const handleMobileMenuClose = () => {
         setMobileMenuAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
-        handleMobileMenuClose();
-    };
 
     const handleMobileMenuOpenMobile = (event: React.MouseEvent<HTMLElement>) => {
         setMobileMenuAnchorEl(event.currentTarget);
@@ -123,26 +120,7 @@ export default function Navbar(props: Readonly<NavbarProps>) {
     };
 
     const menuId = 'primary-search-account-menu';
-    const renderMenu = (
-        <Menu
-            anchorEl={null} // Remove unused anchorEl
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={false} // Remove unused state
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-        </Menu>
-    );
+
 
     const mobileMenuIdMobile = 'mobile-menu-mobile';
     const renderMobileMenuMobile = (
@@ -245,7 +223,6 @@ export default function Navbar(props: Readonly<NavbarProps>) {
                 </Toolbar>
             </AppBar>
             {renderMobileMenuMobile}
-            {renderMenu}
         </Box>
     );
 }
