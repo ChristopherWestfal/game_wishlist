@@ -8,6 +8,7 @@ import WishlistPage from "./pages/WishlistPage.tsx";
 import {Alert, Snackbar} from '@mui/material';
 import Box from "@mui/material/Box";
 import {useAppStore} from "./AppStore.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
     const [message, setMessage] = useState<string>('');
     const [count, setCount] = useState<number>(0)
     const searchQuery = useAppStore((state) => state.searchQuery);
+    const pageNumber = useAppStore((state) => state.pageNumber);
     const globalSetPageNumber = useAppStore((state) => state.setPageNumber);
 
     const handleClick = (severity: 'success' | 'error' | 'warning' | 'info', message: string) => {
@@ -56,6 +58,7 @@ function App() {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
                 setApiGames(response.data.results);
+                globalSetPageNumber(pageNumber + 1);
             })
             .catch(error => console.error("No API available", error))
     }
@@ -66,6 +69,7 @@ function App() {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
                 setApiGames(response.data.results);
+                globalSetPageNumber(pageNumber - 1);
             })
             .catch(error => console.error("No API available", error))
     }
@@ -154,6 +158,11 @@ function App() {
         {
             path: "/wishlist",
             element: <WishlistPage games={wishedGames} deleteById={deleteById} putGame={putGame}/>
+        },
+
+        {
+            path: "/login",
+            element: <LoginPage />
         },
 
     ])

@@ -11,8 +11,8 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import {useAppStore} from "../AppStore.tsx";
+import { useAppStore } from "../AppStore.tsx";
+import { useNavigate } from "react-router-dom";
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -54,7 +54,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
@@ -65,18 +64,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 type NavbarProps = {
-    pageName:string,
+    pageName: string,
 }
 
-export default function Navbar(props:Readonly<NavbarProps>) {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-        React.useState<null | HTMLElement>(null);
-    const updateOpen = useAppStore((state) => state.updateOpen);
-    const dopen = useAppStore((state) => state.dopen);
+export default function Navbar(props: Readonly<NavbarProps>) {
+    const [mobileMenuAnchorEl, setMobileMenuAnchorEl] = React.useState<null | HTMLElement>(null);
 
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const isMobileMenuOpenMobile = Boolean(mobileMenuAnchorEl);
+
+    const dopen = useAppStore((state) => state.dopen);
+    const updateOpen = useAppStore((state) => state.updateOpen);
+    const mobileOpen = useAppStore((state) => state.mobileOpen);
+    const setMobileOpen = useAppStore((state) => state.setMobileOpen);
+
+    const navigate = useNavigate();
 
     const [searchQuery, setSearchQuery] = React.useState<string>(''); // Local state for search input
     const globalSetSearchQuery = useAppStore((state) => state.setSearchQuery);
@@ -89,87 +90,85 @@ export default function Navbar(props:Readonly<NavbarProps>) {
         globalSetPageNumber(1);
     };
 
-    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
+    const handleProfileMenuOpen = () => {
+        navigate('/login');
     };
 
     const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
+        setMobileMenuAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
-        setAnchorEl(null);
+
+    const handleMobileMenuOpenMobile = (event: React.MouseEvent<HTMLElement>) => {
+        setMobileMenuAnchorEl(event.currentTarget);
+    };
+
+    const handleDrawerToggle = () => {
+        if (window.innerWidth < 600) {
+            // Toggle mobile menu
+            setMobileOpen(!mobileOpen);
+        } else {
+            // Toggle sidebar for desktop
+            updateOpen(!dopen);
+        }
+    };
+
+    const handleMobileMenuItemClick = (path: string) => {
+        navigate(path);
         handleMobileMenuClose();
-    };
-
-    const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setMobileMoreAnchorEl(event.currentTarget);
+        globalSetSearchQuery("");
     };
 
     const menuId = 'primary-search-account-menu';
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}>Login</MenuItem>
-        </Menu>
-    );
 
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
+
+    const mobileMenuIdMobile = 'mobile-menu-mobile';
+    const renderMobileMenuMobile = (
         <Menu
-            anchorEl={mobileMoreAnchorEl}
+            anchorEl={mobileMenuAnchorEl}
             anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
             }}
-            id={mobileMenuId}
+            id={mobileMenuIdMobile}
             keepMounted
             transformOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
             }}
-            open={isMobileMenuOpen}
+            open={isMobileMenuOpenMobile}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
+            <MenuItem onClick={() => handleMobileMenuItemClick('/')}>
+                <Typography variant="body1">Gamelist</Typography>
+            </MenuItem>
+            <MenuItem onClick={() => handleMobileMenuItemClick('/wishlist')}>
+                <Typography variant="body1">Wishlist</Typography>
             </MenuItem>
         </Menu>
     );
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="fixed">
+            <AppBar position="static">
                 <Toolbar>
                     <IconButton
                         size="large"
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                        onClick={() => updateOpen(!dopen)}
+                        sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }}
+                        onClick={handleMobileMenuOpenMobile}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        sx={{ mr: 2, display: { xs: 'none', sm: 'block' } }}
+                        onClick={handleDrawerToggle}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -193,6 +192,7 @@ export default function Navbar(props:Readonly<NavbarProps>) {
                         />
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />
+                    {/* Profile Icon for desktop */}
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
                             size="large"
@@ -206,22 +206,23 @@ export default function Navbar(props:Readonly<NavbarProps>) {
                             <AccountCircle />
                         </IconButton>
                     </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                    {/* Profile Icon for mobile */}
+                    <Box sx={{ display: { xs: 'flex', sm: 'none' }, ml: 'auto' }}>
                         <IconButton
                             size="large"
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
+                            edge="end"
+                            aria-label="account of current user"
+                            aria-controls={menuId}
                             aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
+                            onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <MoreIcon />
+                            <AccountCircle />
                         </IconButton>
                     </Box>
                 </Toolbar>
             </AppBar>
-            {renderMobileMenu}
-            {renderMenu}
+            {renderMobileMenuMobile}
         </Box>
     );
 }
