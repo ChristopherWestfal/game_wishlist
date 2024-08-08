@@ -24,25 +24,20 @@ export default function GamelistPage(props: Readonly<GamelistProps>) {
     const pageNumber = useAppStore((state) => state.pageNumber);
     const updateOpen = useAppStore((state) => state.updateOpen);
     const dopen = useAppStore((state) => state.dopen);
-    const globalSetPageNumber = useAppStore((state) => state.setPageNumber);
 
     function handleNext() {
-        globalSetPageNumber(pageNumber + 1);
         props.getAllApiGamesNext();
         if (dopen) {
             updateOpen(false); // Close the sidenav
         }
-        console.log(pageNumber);
     }
 
     function handlePrev() {
         if (pageNumber > 1)
-            globalSetPageNumber(pageNumber - 1);
-        props.getAllApiGamesPrev();
+            props.getAllApiGamesPrev();
         if (dopen) {
             updateOpen(false); // Close the sidenav
         }
-        console.log(pageNumber);
     }
 
     return (

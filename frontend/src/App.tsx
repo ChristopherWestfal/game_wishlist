@@ -22,6 +22,7 @@ function App() {
     const [message, setMessage] = useState<string>('');
     const [count, setCount] = useState<number>(0)
     const searchQuery = useAppStore((state) => state.searchQuery);
+    const pageNumber = useAppStore((state) => state.pageNumber);
     const globalSetPageNumber = useAppStore((state) => state.setPageNumber);
 
     const handleClick = (severity: 'success' | 'error' | 'warning' | 'info', message: string) => {
@@ -57,6 +58,7 @@ function App() {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
                 setApiGames(response.data.results);
+                globalSetPageNumber(pageNumber + 1);
             })
             .catch(error => console.error("No API available", error))
     }
@@ -67,6 +69,7 @@ function App() {
                 setNext(response.data.next);
                 setPrev(response.data.previous);
                 setApiGames(response.data.results);
+                globalSetPageNumber(pageNumber - 1);
             })
             .catch(error => console.error("No API available", error))
     }
